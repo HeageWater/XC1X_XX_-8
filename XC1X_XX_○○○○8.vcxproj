@@ -70,12 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>(SolutionDir)\Generated\Obj</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>(SolutionDir)\Generated\Obj</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +87,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,7 +101,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -140,20 +145,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="roll.cpp" />
+    <ClCompile Include="Code\GameScene.cpp" />
+    <ClCompile Include="Code\Input.cpp" />
+    <ClCompile Include="Code\main.cpp" />
+    <ClCompile Include="Code\map.cpp" />
+    <ClCompile Include="Code\Player.cpp" />
+    <ClCompile Include="Code\roll.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="map.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="roll.h" />
+    <ClInclude Include="Code\GameScene.h" />
+    <ClInclude Include="Code\Input.h" />
+    <ClInclude Include="Code\main.h" />
+    <ClInclude Include="Code\map.h" />
+    <ClInclude Include="Code\Player.h" />
+    <ClInclude Include="Code\roll.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
