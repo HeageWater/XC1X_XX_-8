@@ -35,11 +35,12 @@ void Map::Update()
 	}
 
 	//デバッグ用
-	DrawFormatString(20, 20, 0xaaaaaa, "現在改装%d(ADで増減)",nowPoint[0]);
+	DrawFormatString(20, 20, 0xaaaaaa, "現在改装%d(ADで増減)", nowPoint[0]);
+	DrawFormatString(20, 40, 0xaaaaaa, "現在改装%d(WSで増減)", nowPoint[1]);
 
 	//選択
 	//左
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A)) 
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
 	{
 		if (nowPoint[0] > 0)
 		{
@@ -47,11 +48,28 @@ void Map::Update()
 		}
 	}
 	//右
-	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_D)) 
+	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
 	{
 		if (nowPoint[0] < height_ - 1)
 		{
 			nowPoint[0]++;
+		}
+	}
+
+	//左
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A))
+	{
+		if (nowPoint[1] > 0)
+		{
+			nowPoint[1]--;
+		}
+	}
+	//右
+	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_D))
+	{
+		if (nowPoint[1] < width_ - 1)
+		{
+			nowPoint[1]++;
 		}
 	}
 }
@@ -64,7 +82,7 @@ void Map::Draw()
 		for (size_t j = 0; j < height_; j++)
 		{
 			//trueなら描画する
-			if (load_[i][j])
+			if (load_[i][j] != BLANK)
 			{
 				//サイズ
 				size_t size = 32;
@@ -80,31 +98,54 @@ void Map::Draw()
 				size_t pointY = j * heage + (startPoint / 2);
 
 				//
-				size_t ab = 6;
+				size_t ab = 5;
+
+				size_t color = 0xbb0000;
 
 				if (nowPoint[0] == j)
 				{
-					if (nowF == false)
+					if (nowPoint[1] == i)
 					{
-						now++;
-
-						if (now > 15 * ab)
+						if (nowF == false)
 						{
-							nowF = true;
-						}
-					}
-					else if (nowF == true)
-					{
-						now--;
+							now++;
 
-						if (now < 1 * ab)
+							if (now > 15 * ab)
+							{
+								nowF = true;
+							}
+						}
+						else if (nowF == true)
 						{
-							nowF = false;
-						}
-					}
+							now--;
 
-					size += now / ab;
-					pointX -= now / ab / 2;
+							if (now < 1 * ab)
+							{
+								nowF = false;
+							}
+						}
+
+						size += now / ab;
+						pointX -= now / ab / 2;
+					}
+				}
+
+				size_t spriteSize = size / 4;
+
+				if (load_[i][j] == BATTLE)
+				{
+					color = 0xbb0000;
+					DrawFormatString(pointX, pointY + spriteSize, color, "BATTLE");
+				}
+				else if (load_[i][j] == ITEM)
+				{
+					color = 0x00bb00;
+					DrawFormatString(pointX, pointY + spriteSize, color, "ITEM");
+				}
+				else if (load_[i][j] == POWERUP)
+				{
+					color = 0xbbbb00;
+					DrawFormatString(pointX, pointY + spriteSize, color, "POWERUP");
 				}
 
 				//四角描画
@@ -113,7 +154,7 @@ void Map::Draw()
 					pointY,
 					pointX + size,
 					pointY + size,
-					0xbb0000, true);
+					color, false);
 			}
 		}
 	}
@@ -121,6 +162,10 @@ void Map::Draw()
 
 void Map::MapCreate()
 {
+	//現在地初期化
+	nowPoint[0] = 0;
+	nowPoint[1] = 0;
+
 	//試作
 	int a = rand() % 100;
 
@@ -144,14 +189,34 @@ void Map::MapCreate()
 			//元に戻す
 			load_[i][0] = false;
 
-			if (a > 60)
+			if (a < 60)
 			{
-				load_[i][0] = true;
+				//３択
+				size_t b = rand() % 3;
+
+				if (b == 0)
+				{
+					//バトルマス
+					load_[i][0] = BATTLE;
+				}
+				else if (b == 1)
+				{
+					//アイテムマス
+					load_[i][0] = ITEM;
+				}
+				else
+				{
+					//パワーアップマス
+					load_[i][0] = POWERUP;
+				}
+
+				//カウントプラス
 				count++;
 			}
 			else
 			{
-				load_[i][0] = false;
+				//空白マス
+				load_[i][0] = BLANK;
 			}
 		}
 	}
@@ -179,14 +244,34 @@ void Map::MapCreate()
 				//元に戻す
 				load_[j][i] = false;
 
-				if (a > 60)
+				if (a < 60)
 				{
-					load_[j][i] = true;
+					//３択
+					size_t b = rand() % 3;
+
+					if (b == 0)
+					{
+						//バトルマス
+						load_[j][i] = BATTLE;
+					}
+					else if (b == 1)
+					{
+						//アイテムマス
+						load_[j][i] = ITEM;
+					}
+					else
+					{
+						//パワーアップマス
+						load_[j][i] = POWERUP;
+					}
+
+					//カウントプラス
 					count++;
 				}
 				else
 				{
-					load_[j][i] = false;
+					//空白マス
+					load_[j][i] = BLANK;
 				}
 			}
 		}

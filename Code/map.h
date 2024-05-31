@@ -3,6 +3,7 @@
 // マス
 enum
 {
+	BLANK,	//空白
 	BATTLE,//戦闘
 	ITEM,//アイテム
 	POWERUP,//強化
