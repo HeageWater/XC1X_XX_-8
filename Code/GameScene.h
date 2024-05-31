@@ -31,4 +31,7 @@ private:
 	//マップ
 	std::unique_ptr<Map> map = std::make_unique<Map>();
 
+	//フェーズ
+	size_t phase;
+
 };

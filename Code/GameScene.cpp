@@ -2,6 +2,14 @@
 #include "Input.h"
 #include "roll.h"
 
+enum Phase
+{
+	MapPhase,
+	BattlePhase,
+	ItemPhase,
+	PowerupPhase,
+};
+
 void GameScene::Run()
 {
 	//更新
@@ -18,31 +26,102 @@ void GameScene::Initialize()
 
 	//マップ初期化
 	map->Initialize();
+
+	//最初はマップから
+	phase = MapPhase;
 }
 
 void GameScene::Update()
 {
+	//マスの種類格納用
+	size_t troutKind;
+
 	//入力更新
 	Input::GetInstance()->Update();
 
-	////ロール更新
-	//Roll::GetInstance()->Updare();
+	//フェーズ
+	switch (phase)
+	{
+	case MapPhase:
 
-	//プレイヤー更新
-	//player->Update();
+		//マップ更新
+		map->Update();
 
-	//マップ更新
-	map->Update();
+		//spaceでマスに入る
+		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+		{
+			//マスの種類格納
+			troutKind = map->GetTrout();
+
+			//フェーズ移動
+			if (troutKind == BATTLE)
+			{
+				phase = BattlePhase;
+			}
+			else if (troutKind == ITEM)
+			{
+				phase = ItemPhase;
+			}
+			else if (troutKind == POWERUP)
+			{
+				phase = PowerupPhase;
+			}
+		}
+
+		break;
+
+	case BattlePhase:
+
+		//プレイヤー更新
+		player->Update();
+
+		break;
+
+	case ItemPhase:
+
+		break;
+
+	case PowerupPhase:
+
+		break;
+
+	default:
+
+		break;
+	}
+
+	//O,Pでフェーズ切り替え
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
+	{
+		phase = MapPhase;
+	}
+	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_P))
+	{
+		phase = BattlePhase;
+	}
 }
 
 void GameScene::Draw()
 {
-	////ロール描画
-	//Roll::GetInstance()->Draw();
+	//フェーズ
+	switch (phase)
+	{
+	case MapPhase:
 
-	//プレイヤー描画
-	//player->Draw();
+		//マップ描画
+		map->Draw();
 
-	//マップ描画
-	map->Draw();
+		break;
+
+	case BattlePhase:
+
+		//プレイヤー描画
+		player->Draw();
+
+		break;
+
+	default:
+
+		break;
+	}
 }

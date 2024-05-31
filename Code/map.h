@@ -35,6 +35,9 @@ public:
 	//描画
 	void Draw();
 
+	//入った場所のマスの種類を返す
+	size_t GetTrout();
+
 private:
 
 	//マップ生成

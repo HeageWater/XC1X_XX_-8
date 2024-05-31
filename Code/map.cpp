@@ -28,7 +28,7 @@ void Map::Initialize()
 void Map::Update()
 {
 	//マップ再生成
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_L))
 	{
 		//マップ生成
 		MapCreate();
@@ -100,6 +100,7 @@ void Map::Draw()
 				//
 				size_t ab = 5;
 
+				//色
 				size_t color = 0xbb0000;
 
 				if (nowPoint[0] == j)
@@ -158,6 +159,12 @@ void Map::Draw()
 			}
 		}
 	}
+}
+
+size_t Map::GetTrout()
+{
+	//現在の場所を返す
+	return load_[nowPoint[0]][nowPoint[1]];
 }
 
 void Map::MapCreate()
