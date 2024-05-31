@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include "time.h"
 #include"Player.h"
-//
 #include "map.h"
 #include <math.h>
 #include <vector>
@@ -23,6 +22,13 @@ public:
 
 	//ï`âÊ
 	void Draw();
+
 private:
+
+	//playerê∂ê¨
 	std::unique_ptr<Player> player = std::make_unique<Player>();
+
+	//É}ÉbÉv
+	std::unique_ptr<Map> map = std::make_unique<Map>();
+
 };

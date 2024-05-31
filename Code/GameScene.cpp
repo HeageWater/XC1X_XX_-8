@@ -15,6 +15,9 @@ void GameScene::Initialize()
 
 	//初期化
 	player->Initialize();
+
+	//マップ初期化
+	map->Initialize();
 }
 
 void GameScene::Update()
@@ -26,7 +29,10 @@ void GameScene::Update()
 	//Roll::GetInstance()->Updare();
 
 	//プレイヤー更新
-	player->Update();
+	//player->Update();
+
+	//マップ更新
+	map->Update();
 }
 
 void GameScene::Draw()
@@ -35,5 +41,8 @@ void GameScene::Draw()
 	//Roll::GetInstance()->Draw();
 
 	//プレイヤー描画
-	player->Draw();
+	//player->Draw();
+
+	//マップ描画
+	map->Draw();
 }
