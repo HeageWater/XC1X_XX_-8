@@ -20,7 +20,6 @@ public:
 
 	//•`‰æ
 	void Draw();
-
 private:
 
 };
