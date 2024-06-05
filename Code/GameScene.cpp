@@ -146,10 +146,17 @@ void GameScene::Draw()
 
 void GameScene::Finalize()
 {
+	//敵メモリ開放
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies.erase(enemies.begin() + i);
 	}
+
+	//画像メモリ開放
+	InitGraph();
+
+	//サウンドメモリ開放
+	InitSoundMem();
 }
 
 void GameScene::EnemyUpdate()

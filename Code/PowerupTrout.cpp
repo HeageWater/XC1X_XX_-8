@@ -13,7 +13,7 @@ void PowerupTrout::Initialize()
 void PowerupTrout::Update()
 {
 	//試作
-	int plus = rand() % 3 +2;
+	int plus = rand() % 3 + 2;
 
 	//キーに応じてステータスアップ
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_Z))

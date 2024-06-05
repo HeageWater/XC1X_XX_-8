@@ -91,8 +91,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 	}
 
-	InitGraph();
-	InitSoundMem();
+	//メモリ開放
+	gameScene->Finalize();
 
 	// Dxライブラリ終了処理
 	DxLib_End();
