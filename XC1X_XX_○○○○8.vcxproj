@@ -78,8 +78,8 @@
     <IntDir>$(SolutionDir)\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>(SolutionDir)\Generated\Obj</IntDir>
+    <OutDir>\(SolutionDir)\Generated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>\(SolutionDir)\Generated\Obj</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;(SolutionDir)\Code\Trout;(SolutionDir)\Code\Actor;(SolutionDir)\Code\Game;(SolutionDir)\Code\Scene</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -145,20 +145,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Code\BattleTrout.cpp" />
     <ClCompile Include="Code\GameScene.cpp" />
     <ClCompile Include="Code\Input.cpp" />
     <ClCompile Include="Code\main.cpp" />
     <ClCompile Include="Code\map.cpp" />
     <ClCompile Include="Code\Player.cpp" />
     <ClCompile Include="Code\roll.cpp" />
+    <ClCompile Include="Code\ItemTrout.cpp" />
+    <ClCompile Include="Code\PowerupTrout.cpp" />
+    <ClCompile Include="Code\TroutManager.cpp" />
+    <ClCompile Include="Code\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Code\BaseTrout.h" />
+    <ClInclude Include="Code\BattleTrout.h" />
     <ClInclude Include="Code\GameScene.h" />
     <ClInclude Include="Code\Input.h" />
     <ClInclude Include="Code\main.h" />
     <ClInclude Include="Code\map.h" />
     <ClInclude Include="Code\Player.h" />
     <ClInclude Include="Code\roll.h" />
+    <ClInclude Include="Code\ItemTrout.h" />
+    <ClInclude Include="Code\PowerupTrout.h" />
+    <ClInclude Include="Code\TroutManager.h" />
+    <ClInclude Include="Code\Enemy.h" />
+    <ClInclude Include="Code\Status.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

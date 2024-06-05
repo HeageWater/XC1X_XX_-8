@@ -1,6 +1,10 @@
 #include "DxLib.h"
 #include "Input.h"
 #pragma once
+#include "DxLib.h"
+#include "Input.h"
+#include "Status.h"
+
 enum Attack {
 	weak,
 	medium,

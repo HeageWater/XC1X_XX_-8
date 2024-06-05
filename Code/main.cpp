@@ -11,7 +11,7 @@ const char TITLE[] = "試作";
 const int WIN_WIDTH = 640;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 320;
+const int WIN_HEIGHT = 720;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -46,9 +46,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//ゲームシーン
 	std::unique_ptr<GameScene> gameScene = std::make_unique<GameScene>();
-
-	////map
-	//std::vector<Map> maps_;
 
 	//初期化
 	gameScene->Initialize();

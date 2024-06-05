@@ -1,13 +1,15 @@
 #pragma once
 #include "DxLib.h"
 #include "time.h"
-#include"Player.h"
-//
-#include "map.h"
 #include <math.h>
 #include <vector>
 #include <memory>
 #include <random>
+
+#include "map.h"
+#include "Player.h"
+#include "Enemy.h"
+
 class GameScene
 {
 public:
@@ -23,6 +25,21 @@ public:
 
 	//描画
 	void Draw();
+
 private:
+
+	//player生成
 	std::unique_ptr<Player> player = std::make_unique<Player>();
+
+	//マップ
+	std::unique_ptr<Map> map = std::make_unique<Map>();
+
+	//enemy格納用
+	std::vector<Enemy> enemies;
+
+	//フェーズ
+	size_t phase;
+
+	//敵更新
+	void EnemyUpdate();
 };
