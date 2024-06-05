@@ -28,7 +28,7 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
-	//試作
+	//ランダム
 	int a = rand() % 100;
 
 	//ブロックフラグリセット

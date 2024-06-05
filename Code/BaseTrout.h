@@ -1,7 +1,8 @@
 #pragma once
+#include "Status.h"
 
 class BaseTrout
 {
 public:
-	void Update();
+	Status status;
 };

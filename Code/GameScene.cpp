@@ -130,10 +130,10 @@ void GameScene::Draw()
 		player->Draw();
 
 		//“G•`‰æ
-		//for (size_t i = 0; i < enemies.size(); i++)
-		//{
-			enemies[0].Draw();
-		//}
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			enemies[i].Draw();
+		}
 
 		break;
 
