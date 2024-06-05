@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\BaseTrout.cpp" />
     <ClCompile Include="Code\BattleTrout.cpp" />
     <ClCompile Include="Code\GameScene.cpp" />
     <ClCompile Include="Code\Input.cpp" />
