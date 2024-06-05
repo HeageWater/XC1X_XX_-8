@@ -1,3 +1,5 @@
+#include "DxLib.h"
+#include "Input.h"
 #pragma once
 #include "DxLib.h"
 #include "Input.h"
@@ -12,24 +14,15 @@ enum Attack {
 class Player
 {
 public://関数
-
 	//初期化
 	void Initialize();
-
 	//更新
 	void Update();
-
 	//描画
 	void Draw();
-
 	//攻撃
 	void Attack();
-
-	//
-	size_t GetAttackPower();
-
 private://変数
-
 	//弱中強のアタック値
 	int weakAttack = 0;
 	int mediumAttack = 0;
@@ -53,10 +46,7 @@ private://変数
 	//攻撃の選択
 	int first, second, third = 0;
 	int attackSelect = 0;
-	bool isFirst, isSecond, isThird = false;
-
+	bool isFirst,isSecond, isThird = false;
 	//攻撃選択フラグ
 	bool isAttack = false;
-	
-	size_t attackpower = 3;
 };

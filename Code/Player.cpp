@@ -37,19 +37,55 @@ void Player::Draw()
 		DrawFormatString(50, 200, 0xaaaaaa, "弱");
 		DrawFormatString(100, 200, 0xaaaaaa, "中");
 		DrawFormatString(150, 200, 0xaaaaaa, "強");
+		//操作方法
+		DrawFormatString(300, 200, 0xaaaaaa, "A,Dで選択:Spaceで決定");
 		//何を選んだか
-		DrawFormatString(50, 100, 0xaaaaaa, "1:%s", first);
-		DrawFormatString(100, 100, 0xaaaaaa, "2:%s", second);
-		DrawFormatString(150, 100, 0xaaaaaa, "3:%s", third);
-		//今どれを選択しているか
-		if (attackSelect == weak) {
-			DrawFormatString(50, 150, 0xaaaaaa, "weakを選択:space");
+		////一番目
+		if (isFirst) {
+			if (first == weak) {
+				DrawFormatString(50, 100, 0xaaaaaa, "1:weak");
+			}
+			else if (first == medium) {
+				DrawFormatString(50, 100, 0xaaaaaa, "1:medium");
+			}
+			else if (first == strong) {
+				DrawFormatString(50, 100, 0xaaaaaa, "1:strong");
+			}
 		}
-		else if (attackSelect == medium) {
-			DrawFormatString(50, 150, 0xaaaaaa, "mediumを選択:space");
+		////二番目
+		if (isSecond) {
+			if (second == weak) {
+				DrawFormatString(150, 100, 0xaaaaaa, "2:weak");
+			}
+			else if (second == medium) {
+				DrawFormatString(150, 100, 0xaaaaaa, "2:medium");
+			}
+			else if (second == strong) {
+				DrawFormatString(150, 100, 0xaaaaaa, "2:strong");
+			}
+		}
+		////三番目
+		if (isThird) {
+			if (third == weak) {
+				DrawFormatString(250, 100, 0xaaaaaa, "3:weak");
+			}
+			else if (third == medium) {
+				DrawFormatString(250, 100, 0xaaaaaa, "3:medium");
+			}
+			else if (third == strong) {
+				DrawFormatString(250, 100, 0xaaaaaa, "3:strong");
+			}
+		}
+
+		//今どれを選択しているか
+		if (attackSelect==weak) {
+			DrawFormatString(50, 150, 0xaaaaaa, "weakを選択");
+		}
+		else if (attackSelect==medium) {
+			DrawFormatString(50, 150, 0xaaaaaa, "mediumを選択");
 		}
 		else if (attackSelect == strong) {
-			DrawFormatString(50, 150, 0xaaaaaa, "strongを選択:space");
+			DrawFormatString(50, 150, 0xaaaaaa, "strongを選択");
 		}
 	}
 }
@@ -78,19 +114,20 @@ void Player::Attack()
 	//決定
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE)) {
 		//一番目
-		if (isFirst == false) {
+		if (isFirst==false) {
 			first = attackSelect;
 			isFirst = true;
 		}
 		//二番目
-		else if (isSecond == false) {
+		else if (isSecond==false) {
 			second = attackSelect;
 			isSecond = true;
 		}
 		//三番目
-		else if (isThird == false) {
+		else if (isThird==false) {
 			third = attackSelect;
 			isThird = true;
+			WaitKey();
 		}
 	}
 	//アタックの終了
@@ -100,9 +137,4 @@ void Player::Attack()
 		isThird = false;
 		isAttack = false;
 	}
-}
-
-size_t Player::GetAttackPower()
-{
-	return attackpower;
 }
