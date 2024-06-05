@@ -13,5 +13,9 @@ public:
 	//
 	void Draw();
 
+	//
+	Status GetStatus() { return status; };
+
 private:
+
 };

@@ -18,7 +18,6 @@ void GameScene::Run()
 
 void GameScene::Initialize()
 {
-
 	//初期化
 	player->Initialize();
 
@@ -68,10 +67,12 @@ void GameScene::Update()
 			}
 			else if (troutKind == ITEM)
 			{
+				//アイテムフェーズへ移行
 				phase = ItemPhase;
 			}
 			else if (troutKind == POWERUP)
 			{
+				//パワーアップフェーズへ移行
 				phase = PowerupPhase;
 			}
 		}
@@ -140,6 +141,14 @@ void GameScene::Draw()
 	default:
 
 		break;
+	}
+}
+
+void GameScene::Finalize()
+{
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies.erase(enemies.begin() + i);
 	}
 }
 

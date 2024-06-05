@@ -172,6 +172,7 @@
     <ClInclude Include="Code\TroutManager.h" />
     <ClInclude Include="Code\Enemy.h" />
     <ClInclude Include="Code\Status.h" />
+    <ClInclude Include="Item.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

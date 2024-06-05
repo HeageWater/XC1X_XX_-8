@@ -26,6 +26,9 @@ public:
 	//•`‰æ
 	void Draw();
 
+	//ƒƒ‚ƒŠŠJ•ú
+	void Finalize();
+
 private:
 
 	//player¶¬
