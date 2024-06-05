@@ -40,9 +40,14 @@ private://変数
 	int initialStrongAttackProbability = 20;
 
 	//攻撃の選択
-	int first, second, third = 0;
-	int attackSelect = 0;
+	enum Attack first, second, third = Attack::weak;
+	enum Attack attackSelect = Attack::weak;
 	bool isFirst,isSecond, isThird = false;
 	//攻撃選択フラグ
 	bool isAttack = false;
+
+	//アタック値の合計
+	int attackTotal = 0;
+	//アタックの計算フラグ
+	bool isAttackProbability = false;
 };
