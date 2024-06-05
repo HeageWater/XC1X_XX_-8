@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;(SolutionDir)\Code\Trout;(SolutionDir)\Code\Actor;(SolutionDir)\Code\Game;(SolutionDir)\Code\Scene</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -156,6 +156,7 @@
     <ClCompile Include="Code\ItemTrout.cpp" />
     <ClCompile Include="Code\PowerupTrout.cpp" />
     <ClCompile Include="Code\TroutManager.cpp" />
+    <ClCompile Include="Code\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\BaseTrout.h" />
@@ -169,6 +170,8 @@
     <ClInclude Include="Code\ItemTrout.h" />
     <ClInclude Include="Code\PowerupTrout.h" />
     <ClInclude Include="Code\TroutManager.h" />
+    <ClInclude Include="Code\Enemy.h" />
+    <ClInclude Include="Code\Status.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

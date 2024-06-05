@@ -101,3 +101,8 @@ void Player::Attack()
 		isAttack = false;
 	}
 }
+
+size_t Player::GetAttackPower()
+{
+	return attackpower;
+}

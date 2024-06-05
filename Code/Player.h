@@ -1,6 +1,8 @@
+#pragma once
 #include "DxLib.h"
 #include "Input.h"
-#pragma once
+#include "Status.h"
+
 enum Attack {
 	weak,
 	medium,
@@ -22,6 +24,9 @@ public://ŠÖ”
 
 	//UŒ‚
 	void Attack();
+
+	//
+	size_t GetAttackPower();
 
 private://•Ï”
 
@@ -52,4 +57,6 @@ private://•Ï”
 
 	//UŒ‚‘I‘ğƒtƒ‰ƒO
 	bool isAttack = false;
+	
+	size_t attackpower = 3;
 };

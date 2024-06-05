@@ -18,8 +18,6 @@ void GameScene::Run()
 
 void GameScene::Initialize()
 {
-	////ロール初期化
-	//Roll::GetInstance()->Initialize();
 
 	//初期化
 	player->Initialize();
@@ -56,7 +54,17 @@ void GameScene::Update()
 			//フェーズ移動
 			if (troutKind == BATTLE)
 			{
+				//バトルフェーズへ移行
 				phase = BattlePhase;
+
+				//敵生成
+				Enemy newEnemy;
+
+				//初期化
+				newEnemy.Initialize();
+
+				//格納
+				enemies.push_back(newEnemy);
 			}
 			else if (troutKind == ITEM)
 			{
@@ -74,6 +82,9 @@ void GameScene::Update()
 
 		//プレイヤー更新
 		player->Update();
+
+		//敵更新
+		EnemyUpdate();
 
 		break;
 
@@ -118,10 +129,32 @@ void GameScene::Draw()
 		//プレイヤー描画
 		player->Draw();
 
+		//敵描画
+		//for (size_t i = 0; i < enemies.size(); i++)
+		//{
+			enemies[0].Draw();
+		//}
+
 		break;
 
 	default:
 
 		break;
+	}
+}
+
+void GameScene::EnemyUpdate()
+{
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		//更新
+		enemies[i].Update();
+
+		//deadflagがtrueだったら削除
+		if (enemies[i].GetDeadFlag())
+		{
+			//削除
+			enemies.erase(enemies.begin() + i);
+		}
 	}
 }

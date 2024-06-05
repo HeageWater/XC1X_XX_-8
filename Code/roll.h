@@ -2,7 +2,6 @@
 
 class Roll
 {
-
 public:
 
 	//‰Šú‰»
