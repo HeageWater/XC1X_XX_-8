@@ -37,10 +37,17 @@ void GameScene::Initialize()
 
 	//タイトル
 	scene = Title;
+
+	//リソース読み込み
+
+	titlePng = LoadGraph("Resources//title.png");
 }
 
 void GameScene::Update()
 {
+	//入力更新
+	Input::GetInstance()->Update();
+
 	//フェーズ
 	switch (scene)
 	{
@@ -142,9 +149,6 @@ void GameScene::PlayScene()
 {
 	//マスの種類格納用
 	size_t troutKind;
-
-	//入力更新
-	Input::GetInstance()->Update();
 
 	//フェーズ
 	switch (phase)
@@ -273,6 +277,8 @@ void GameScene::PlayDraw()
 
 void GameScene::TitleDraw()
 {
+	//タイトル
+	DrawGraph(0, 0, titlePng, 0);
 }
 
 void GameScene::GameoverDraw()
