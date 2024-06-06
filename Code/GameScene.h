@@ -54,4 +54,13 @@ private:
 	void TitleScene();
 	void GameoverScene();
 	void ClearScene();
+
+	//各描画
+	void PlayDraw();
+	void TitleDraw();
+	void GameoverDraw();
+	void ClearDraw();
+
+	//仮リソース
+	size_t titlePng;
 };

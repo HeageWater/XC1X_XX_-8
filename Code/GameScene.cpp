@@ -76,30 +76,33 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//フェーズ
-	switch (phase)
+	switch (scene)
 	{
-	case MapPhase:
+	case Title:
 
-		//マップ描画
-		map->Draw();
+		TitleDraw();
 
 		break;
 
-	case BattlePhase:
+	case Play:
 
-		//プレイヤー描画
-		player->Draw();
+		PlayDraw();
 
-		//敵描画
-		for (size_t i = 0; i < enemies.size(); i++)
-		{
-			enemies[i].Draw();
-		}
+		break;
+
+	case Clear:
+
+		ClearDraw();
+
+		break;
+
+	case Over:
+
+		GameoverDraw();
 
 		break;
 
 	default:
-
 		break;
 	}
 }
@@ -222,6 +225,11 @@ void GameScene::PlayScene()
 
 void GameScene::TitleScene()
 {
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Play;
+	}
 }
 
 void GameScene::GameoverScene()
@@ -229,5 +237,48 @@ void GameScene::GameoverScene()
 }
 
 void GameScene::ClearScene()
+{
+}
+
+void GameScene::PlayDraw()
+{
+	//フェーズ
+	switch (phase)
+	{
+	case MapPhase:
+
+		//マップ描画
+		map->Draw();
+
+		break;
+
+	case BattlePhase:
+
+		//プレイヤー描画
+		player->Draw();
+
+		//敵描画
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			enemies[i].Draw();
+		}
+
+		break;
+
+	default:
+
+		break;
+	}
+}
+
+void GameScene::TitleDraw()
+{
+}
+
+void GameScene::GameoverDraw()
+{
+}
+
+void GameScene::ClearDraw()
 {
 }
