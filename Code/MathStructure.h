@@ -1,5 +1,5 @@
 #pragma once
-class Math
+class MathStructure
 {
 };
 

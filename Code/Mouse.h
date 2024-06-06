@@ -1,5 +1,5 @@
 #pragma once
-#include "Math.h"
+#include "MathStructure.h"
 
 struct M2DColData {
 	Float2 pos;
