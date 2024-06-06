@@ -272,6 +272,7 @@ void GameScene::PlayScene()
 		//負けたとき
 		if (player->GetDeadFlag()) {
 			//ここでゲームオーバー
+			scene = Over;
 			//α版用
 			player->Reset();
 			phase = MapPhase;
@@ -287,6 +288,7 @@ void GameScene::PlayScene()
 		break;
 
 	case ItemPhase:
+
 
 		break;
 
@@ -313,6 +315,8 @@ void GameScene::PlayScene()
 				powerups.erase(powerups.begin() + i);
 			}
 		}
+
+		break;
 
 	default:
 
@@ -342,10 +346,20 @@ void GameScene::TitleScene()
 
 void GameScene::GameoverScene()
 {
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Title;
+	}
 }
 
 void GameScene::ClearScene()
 {
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Title;
+	}
 }
 
 void GameScene::PlayDraw()
@@ -387,6 +401,22 @@ void GameScene::PlayDraw()
 		DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
 		DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
 		DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
+
+		break;
+
+	case ItemPhase:
+
+		DrawFormatString(0, 0, 0xaaaaaa, "Item");
+
+		break;
+
+	case PowerupPhase:
+
+		for (size_t i = 0; i < powerups.size(); i++)
+		{
+			//更新
+			powerups[i].Draw();
+		}
 
 		break;
 

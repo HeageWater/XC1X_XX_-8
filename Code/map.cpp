@@ -165,7 +165,7 @@ void Map::Draw()
 size_t Map::GetTrout()
 {
 	//現在の場所を返す
-	return load_[nowPoint[0]][nowPoint[1]];
+	return load_[nowPoint[1]][nowPoint[0]];
 }
 
 void Map::MapCreate()
@@ -192,40 +192,41 @@ void Map::MapCreate()
 		for (size_t i = 0; i < width_; i++)
 		{
 			//乱数
-			a = rand() % 100;
+			//a = rand() % 100;
 
 			//元に戻す
 			load_[i][0] = false;
 
-			if (a < 60)
-			{
+			//if (a < 60)
+			//{
 				//３択
-				size_t b = rand() % 3;
+			size_t b = rand() % 3;
 
-				if (b == 0)
-				{
-					//バトルマス
-					load_[i][0] = BATTLE;
-				}
-				else if (b == 1)
-				{
-					//アイテムマス
-					load_[i][0] = ITEM;
-				}
-				else
-				{
-					//パワーアップマス
-					load_[i][0] = POWERUP;
-				}
-
-				//カウントプラス
-				count++;
+			if (b == 0)
+			{
+				//バトルマス
+				load_[i][0] = BATTLE;
+			}
+			else if (b == 1)
+			{
+				//アイテムマス
+				load_[i][0] = BATTLE;
 			}
 			else
 			{
-				//空白マス
-				load_[i][0] = BLANK;
+				//パワーアップマス
+				load_[i][0] = POWERUP;
 			}
+
+			//カウントプラス
+			count++;
+
+			//}
+			//else
+			//{
+			//	//空白マス
+			//	load_[i][0] = BLANK;
+			//}
 		}
 	}
 
@@ -247,12 +248,12 @@ void Map::MapCreate()
 			for (size_t j = 0; j < width_; j++)
 			{
 				//乱数
-				a = rand() % 100;
+				//a = rand() % 100;
 
 				//元に戻す
 				load_[j][i] = false;
 
-				if (a < 60)
+				//if (a < 60)
 				{
 					//３択
 					size_t b = rand() % 3;
@@ -265,7 +266,7 @@ void Map::MapCreate()
 					else if (b == 1)
 					{
 						//アイテムマス
-						load_[j][i] = ITEM;
+						load_[j][i] = BATTLE;
 					}
 					else
 					{
@@ -276,11 +277,11 @@ void Map::MapCreate()
 					//カウントプラス
 					count++;
 				}
-				else
-				{
-					//空白マス
-					load_[j][i] = BLANK;
-				}
+				//else
+				//{
+				//	//空白マス
+				//	load_[j][i] = BLANK;
+				//}
 			}
 		}
 	}
