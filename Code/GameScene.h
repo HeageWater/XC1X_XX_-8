@@ -43,6 +43,15 @@ private:
 	//フェーズ
 	size_t phase;
 
+	//シーン
+	size_t scene;
+
 	//敵更新
 	void EnemyUpdate();
+
+	//各シーン
+	void PlayScene();
+	void TitleScene();
+	void GameoverScene();
+	void ClearScene();
 };
