@@ -355,8 +355,8 @@ void GameScene::PlayDraw()
 	{
 	case MapPhase:
 
-		//”wŒi
-		DrawGraph(0, 0, mapBackGroundPng, 0);
+		////”wŒi
+		//DrawGraph(0, 0, mapBackGroundPng, 0);
 		//ƒ}ƒbƒv•`‰æ
 		map->Draw();
 
@@ -370,8 +370,8 @@ void GameScene::PlayDraw()
 
 	case BattlePhase:
 
-		//”wŒi
-		DrawGraph(0, 0, playBackGroundPng, 0);
+		////”wŒi
+		//DrawGraph(0, 0, playBackGroundPng, 0);
 
 		//ƒvƒŒƒCƒ„[•`‰æ
 		player->Draw();
