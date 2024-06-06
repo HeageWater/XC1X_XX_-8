@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Input.h"
+#include "Mouse.h"
 #include "roll.h"
 
 enum Phase
@@ -14,6 +15,8 @@ void GameScene::Run()
 {
 	//更新
 	Update();
+	//マウスフレーム更新
+	Mouse::GetInstance()->MousePrev();
 }
 
 void GameScene::Initialize()
@@ -36,6 +39,13 @@ void GameScene::Update()
 
 	//入力更新
 	Input::GetInstance()->Update();
+	Mouse::GetInstance()->Update();
+
+	//テスト
+	if (Mouse::GetInstance()->isMouseDown(MOUSE_INPUT_LEFT)) {
+		DrawFormatString(0, 220, 0xaaaaaa, "左クリック");
+	}
+	DrawFormatString(0, 200, 0xaaaaaa, "マウス座標 (%f,%f)", Mouse::GetInstance()->mousePos.x, Mouse::GetInstance()->mousePos.y);
 
 	//フェーズ
 	switch (phase)
@@ -44,7 +54,7 @@ void GameScene::Update()
 
 		//マップ更新
 		map->Update();
-
+	
 		//spaceでマスに入る
 		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
 		{

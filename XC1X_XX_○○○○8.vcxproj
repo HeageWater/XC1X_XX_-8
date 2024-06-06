@@ -101,9 +101,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>(SolutionDir);(SolutionDir)\Code;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +150,7 @@
     <ClCompile Include="Code\Input.cpp" />
     <ClCompile Include="Code\main.cpp" />
     <ClCompile Include="Code\map.cpp" />
+    <ClCompile Include="Code\Mouse.cpp" />
     <ClCompile Include="Code\Player.cpp" />
     <ClCompile Include="Code\roll.cpp" />
     <ClCompile Include="Code\ItemTrout.cpp" />
@@ -164,6 +165,8 @@
     <ClInclude Include="Code\Input.h" />
     <ClInclude Include="Code\main.h" />
     <ClInclude Include="Code\map.h" />
+    <ClInclude Include="Code\Math.h" />
+    <ClInclude Include="Code\Mouse.h" />
     <ClInclude Include="Code\Player.h" />
     <ClInclude Include="Code\roll.h" />
     <ClInclude Include="Code\ItemTrout.h" />

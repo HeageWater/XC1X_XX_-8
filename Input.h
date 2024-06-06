@@ -30,4 +30,6 @@ public:
 	//ó£ÇµÇΩèuä‘
 	bool KeyRelease(size_t key);
 
+	//É}ÉEÉX
+	Mouse* mouse;
 };
