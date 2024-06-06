@@ -269,6 +269,7 @@ void GameScene::PlayScene()
 		//負けたとき
 		if (player->GetDeadFlag()) {
 			//ここでゲームオーバー
+			scene = Over;
 			//α版用
 			player->Reset();
 			phase = MapPhase;
@@ -345,10 +346,20 @@ void GameScene::TitleScene()
 
 void GameScene::GameoverScene()
 {
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Title;
+	}
 }
 
 void GameScene::ClearScene()
 {
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Title;
+	}
 }
 
 void GameScene::PlayDraw()
