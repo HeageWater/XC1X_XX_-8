@@ -38,6 +38,8 @@ public:
 	//入った場所のマスの種類を返す
 	size_t GetTrout();
 
+	//
+	void TroutPlus() { nowPoint[0]++; };
 private:
 
 	//マップ生成
@@ -61,4 +63,9 @@ private:
 	//仮動きよう
 	size_t now = 0;
 	bool nowF = false;
+
+	//リソース
+	size_t battlePng;
+	size_t itemPng;
+	size_t powerPng;
 };

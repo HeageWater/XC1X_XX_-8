@@ -30,6 +30,10 @@ public:
 	//ターンチェンジ
 	void TurnChange();
 
+	//メモリ開放
+	void Finalize();
+
+
 private:
 
 	//player生成
@@ -47,9 +51,31 @@ private:
 	//フェーズ
 	size_t phase;
 
+	//シーン
+	size_t scene;
+
 	//ターン
 	int turn = 0;
 
 	//敵更新
 	void EnemyUpdate();
+
+	//各シーン
+	void PlayScene();
+	void TitleScene();
+	void GameoverScene();
+	void ClearScene();
+
+	//各描画
+	void PlayDraw();
+	void TitleDraw();
+	void GameoverDraw();
+	void ClearDraw();
+
+	//仮リソース
+	size_t titlePng;
+	size_t gameoverPng;
+	size_t clearPng;
+	size_t mapBackGroundPng;
+	size_t playBackGroundPng;
 };

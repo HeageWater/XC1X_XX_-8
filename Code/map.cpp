@@ -23,6 +23,11 @@ void Map::Initialize()
 	//仮動きよう
 	now = 0;
 	nowF = false;
+
+	//リソース読み込み
+	battlePng = LoadGraph("Resource//battle.png");
+	itemPng = LoadGraph("Resource//heal.png");
+	powerPng = LoadGraph("Resource//enhance.png");
 }
 
 void Map::Update()
@@ -41,21 +46,21 @@ void Map::Update()
 
 	//選択
 	//上
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
-	{
-		if (nowPoint[0] > 0)
-		{
-			nowPoint[0]--;
-		}
-	}
-	//下
-	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
-	{
-		if (nowPoint[0] < height_ - 1)
-		{
-			nowPoint[0]++;
-		}
-	}
+	//if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
+	//{
+	//	if (nowPoint[0] > 0)
+	//	{
+	//		nowPoint[0]--;
+	//	}
+	//}
+	////下
+	//else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
+	//{
+	//	if (nowPoint[0] < height_ - 1)
+	//	{
+	//		nowPoint[0]++;
+	//	}
+	//}
 
 	//左
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A))
@@ -137,26 +142,39 @@ void Map::Draw()
 				if (load_[i][j] == BATTLE)
 				{
 					color = 0xbb0000;
-					DrawFormatString(pointX, pointY + spriteSize, color, "BATTLE");
+					//DrawFormatString(pointX, pointY + spriteSize, color, "BATTLE");
+
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						battlePng, false);
 				}
 				else if (load_[i][j] == ITEM)
 				{
 					color = 0x00bb00;
-					DrawFormatString(pointX, pointY + spriteSize, color, "ITEM");
+					//DrawFormatString(pointX, pointY + spriteSize, color, "ITEM");
+
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						itemPng, false);
 				}
 				else if (load_[i][j] == POWERUP)
 				{
 					color = 0xbbbb00;
-					DrawFormatString(pointX, pointY + spriteSize, color, "POWERUP");
-				}
+					//DrawFormatString(pointX, pointY + spriteSize, color, "POWERUP");
 
-				//四角描画
-				DrawBox(
-					pointX,
-					pointY,
-					pointX + size,
-					pointY + size,
-					color, false);
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						powerPng, false);
+				}
 			}
 		}
 	}
@@ -165,7 +183,7 @@ void Map::Draw()
 size_t Map::GetTrout()
 {
 	//現在の場所を返す
-	return load_[nowPoint[0]][nowPoint[1]];
+	return load_[nowPoint[1]][nowPoint[0]];
 }
 
 void Map::MapCreate()
@@ -192,40 +210,41 @@ void Map::MapCreate()
 		for (size_t i = 0; i < width_; i++)
 		{
 			//乱数
-			a = rand() % 100;
+			//a = rand() % 100;
 
 			//元に戻す
 			load_[i][0] = false;
 
-			if (a < 60)
-			{
+			//if (a < 60)
+			//{
 				//３択
-				size_t b = rand() % 3;
+			size_t b = rand() % 3;
 
-				if (b == 0)
-				{
-					//バトルマス
-					load_[i][0] = BATTLE;
-				}
-				else if (b == 1)
-				{
-					//アイテムマス
-					load_[i][0] = ITEM;
-				}
-				else
-				{
-					//パワーアップマス
-					load_[i][0] = POWERUP;
-				}
-
-				//カウントプラス
-				count++;
+			if (b == 0)
+			{
+				//バトルマス
+				load_[i][0] = BATTLE;
+			}
+			else if (b == 1)
+			{
+				//アイテムマス
+				load_[i][0] = BATTLE;
 			}
 			else
 			{
-				//空白マス
-				load_[i][0] = BLANK;
+				//パワーアップマス
+				load_[i][0] = POWERUP;
 			}
+
+			//カウントプラス
+			count++;
+
+			//}
+			//else
+			//{
+			//	//空白マス
+			//	load_[i][0] = BLANK;
+			//}
 		}
 	}
 
@@ -247,12 +266,12 @@ void Map::MapCreate()
 			for (size_t j = 0; j < width_; j++)
 			{
 				//乱数
-				a = rand() % 100;
+				//a = rand() % 100;
 
 				//元に戻す
 				load_[j][i] = false;
 
-				if (a < 60)
+				//if (a < 60)
 				{
 					//３択
 					size_t b = rand() % 3;
@@ -265,7 +284,7 @@ void Map::MapCreate()
 					else if (b == 1)
 					{
 						//アイテムマス
-						load_[j][i] = ITEM;
+						load_[j][i] = BATTLE;
 					}
 					else
 					{
@@ -276,11 +295,11 @@ void Map::MapCreate()
 					//カウントプラス
 					count++;
 				}
-				else
-				{
-					//空白マス
-					load_[j][i] = BLANK;
-				}
+				//else
+				//{
+				//	//空白マス
+				//	load_[j][i] = BLANK;
+				//}
 			}
 		}
 	}
