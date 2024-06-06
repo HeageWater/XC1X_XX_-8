@@ -76,6 +76,15 @@ void GameScene::Update()
 			else if (troutKind == POWERUP)
 			{
 				phase = PowerupPhase;
+
+				//敵生成
+				PowerupTrout newPower;
+
+				//初期化
+				newPower.Initialize();
+
+				//格納
+				powerups.push_back(newPower);
 			}
 		}
 
@@ -124,6 +133,28 @@ void GameScene::Update()
 
 	case PowerupPhase:
 
+		for (size_t i = 0; i < powerups.size(); i++)
+		{
+			//更新
+			powerups[i].Update();
+
+			//キーに応じてステータスアップ
+			if (Input::GetInstance()->KeyTrigger(KEY_INPUT_Z) || Input::GetInstance()->KeyTrigger(KEY_INPUT_X) || Input::GetInstance()->KeyTrigger(KEY_INPUT_C))
+			{
+				//プレイヤー強化
+				player->PlusStatus(powerups[i].GetStatus());
+
+				//マップフェーズへ
+				phase = MapPhase;
+			}
+
+			//消去
+			if (powerups[i].GetDeleteFlag())
+			{
+				powerups.erase(powerups.begin() + i);
+			}
+		}
+
 		break;
 
 	default:
@@ -167,10 +198,30 @@ void GameScene::Draw()
 
 		break;
 
+	case ItemPhase:
+
+		break;
+
+	case PowerupPhase:
+
+		//敵描画
+		for (size_t i = 0; i < powerups.size(); i++)
+		{
+			powerups[i].Draw();
+		}
+
+		break;
+
 	default:
 
 		break;
 	}
+
+	//playerステータス表示
+	DrawFormatString(80, 570, 0xaaaaaa, "プレイヤーステータス");
+	DrawFormatString(80, 600, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
+	DrawFormatString(80, 630, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
+	DrawFormatString(80, 660, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 }
 
 void GameScene::TurnChange()
@@ -200,7 +251,6 @@ void GameScene::EnemyUpdate()
 {
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-
 		//更新
 		enemies[i].Update();
 		////敵の攻撃判定

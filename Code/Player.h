@@ -37,6 +37,8 @@ public://関数
 	//ゲッター
 	//ステータスを返す
 	Status GetStatus() { return status; }
+	//ステータス加算
+	void PlusStatus(Status state);
 	//攻撃が終わったタイミング
 	bool GetIsAttack() { return isAttack; }
 	//ターンチェンジ
@@ -70,7 +72,7 @@ private://変数
 	//攻撃の選択
 	enum Attack first, second, third = Attack::weak;
 	enum Attack attackSelect = Attack::weak;
-	bool isFirst,isSecond, isThird = false;
+	bool isFirst, isSecond, isThird = false;
 	//攻撃選択フラグ
 	bool isAttack = false;
 

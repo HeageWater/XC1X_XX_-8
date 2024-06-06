@@ -9,6 +9,7 @@
 #include "map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "PowerupTrout.h"
 
 class GameScene
 {
@@ -39,6 +40,9 @@ private:
 
 	//enemy格納用
 	std::vector<Enemy> enemies;
+
+	//
+	std::vector<PowerupTrout> powerups;
 
 	//フェーズ
 	size_t phase;

@@ -13,5 +13,14 @@ public:
 	//
 	void Draw();
 
+	//
+	Status GetStatus() { return status; };
+
+	//
+	bool GetDeleteFlag() { return deleteFlag; };
+
 private:
+
+	//
+	bool deleteFlag;
 };
