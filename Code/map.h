@@ -40,6 +40,8 @@ public:
 
 	//
 	void TroutPlus() { nowPoint[0]++; };
+
+	size_t GetTroutCount() { return nowPoint[0]; };
 private:
 
 	//É}ÉbÉvê∂ê¨

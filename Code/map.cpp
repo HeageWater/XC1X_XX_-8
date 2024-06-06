@@ -36,31 +36,31 @@ void Map::Update()
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_L))
 	{
 		//マップ生成
-		MapCreate();
+		//MapCreate();
 	}
 
 	//デバッグ用
-	DrawFormatString(20, 20, 0xaaaaaa, "現在改装%d(ADで増減)", nowPoint[0]);
+	DrawFormatString(20, 20, 0xaaaaaa, "ADで横移動");
+	/*DrawFormatString(20, 20, 0xaaaaaa, "現在改装%d(ADで増減)", nowPoint[0]);
 	DrawFormatString(20, 40, 0xaaaaaa, "現在改装%d(WSで増減)", nowPoint[1]);
-	DrawFormatString(20, 60, 0xaaaaaa, "マップ再生成:L");
-
+	DrawFormatString(20, 60, 0xaaaaaa, "マップ再生成:L");*/
 	//選択
 	//上
-	//if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
-	//{
-	//	if (nowPoint[0] > 0)
-	//	{
-	//		nowPoint[0]--;
-	//	}
-	//}
-	////下
-	//else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
-	//{
-	//	if (nowPoint[0] < height_ - 1)
-	//	{
-	//		nowPoint[0]++;
-	//	}
-	//}
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
+	{
+		if (nowPoint[0] > 0)
+		{
+			nowPoint[0]--;
+		}
+	}
+	//下
+	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
+	{
+		if (nowPoint[0] < height_ - 1)
+		{
+			nowPoint[0]++;
+		}
+	}
 
 	//左
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A))

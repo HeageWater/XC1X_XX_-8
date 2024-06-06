@@ -8,6 +8,7 @@ enum Phase
 	BattlePhase,
 	ItemPhase,
 	PowerupPhase,
+	BossPhase,
 };
 
 enum Scene
@@ -17,7 +18,6 @@ enum Scene
 	Clear,
 	Over,
 };
-
 
 void GameScene::Run()
 {
@@ -186,10 +186,14 @@ void GameScene::Finalize()
 	//サウンドメモリ開放
 	InitSoundMem();
 }
+
 void GameScene::PlayScene()
 {
 	//マスの種類格納用
 	size_t troutKind;
+
+	//階層
+	size_t kaisou = 10;
 
 	//フェーズ
 	switch (phase)
@@ -198,6 +202,22 @@ void GameScene::PlayScene()
 
 		//マップ更新
 		map->Update();
+
+		//奥まで行ったら
+		if (map->GetTroutCount() >= kaisou)
+		{
+			//Bossへ
+			phase = BossPhase;
+
+			//敵生成
+			Enemy newEnemy;
+
+			//初期化
+			newEnemy.Initialize();
+
+			//格納
+			enemies.push_back(newEnemy);
+		}
 
 		//spaceでマスに入る
 		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
@@ -321,6 +341,45 @@ void GameScene::PlayScene()
 
 		break;
 
+	case BossPhase:
+
+		//プレイヤー更新
+		player->Update();
+
+		//敵更新
+		EnemyUpdate();
+
+		//ターンチェンジ
+		TurnChange();
+
+		//敵を倒した時
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			if (enemies[i].GetDeadFlag()) {
+				//削除
+				enemies.erase(enemies.begin() + i);
+				//本来は報酬だけどα版はそのまま戻る
+				scene = Clear;
+			}
+		}
+		//負けたとき
+		if (player->GetDeadFlag()) {
+			//ここでゲームオーバー
+			scene = Over;
+			//α版用
+			player->Reset();
+			phase = MapPhase;
+			//敵の削除
+			for (size_t i = 0; i < enemies.size(); i++)
+			{
+				//削除
+				enemies.erase(enemies.begin() + i);
+			}
+		}
+
+
+		break;
+
 	default:
 
 		break;
@@ -420,6 +479,26 @@ void GameScene::PlayDraw()
 			//更新
 			powerups[i].Draw();
 		}
+
+		break;
+
+	case BossPhase:
+
+		//プレイヤー描画
+		player->Draw();
+
+		//敵描画
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			enemies[i].Draw();
+		}
+
+		//playerステータス表示
+		DrawFormatString(50, 50, 0xaaaaaa, "ボスバトル");
+		DrawFormatString(480, 510, 0xaaaaaa, "プレイヤーステータス");
+		DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
+		DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
+		DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 
 		break;
 
