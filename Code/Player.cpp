@@ -11,6 +11,11 @@ void Player::Initialize()
 	weakAttackProbability = initialWeakAttackProbability;
 	mediumAttackProbability = initialMediumAttackProbability;
 	strongAttackProbability = initialStrongAttackProbability;
+
+	//ステータス
+	status.hp = 10;
+	status.power = 0;
+	status.speed = 1;
 }
 
 void Player::Update()
@@ -23,82 +28,102 @@ void Player::Update()
 	if (isAttack == true) {
 		Attack();
 	}
+	//デスフラグ
+	if (status.hp <= 0) {
+		deadFlag = true;
+	}
 }
 
 void Player::Draw()
 {
 	//攻撃を選んでいない時
 	if (!isAttack) {
-		DrawFormatString(50, 100, 0xaaaaaa, "攻撃:ENTER");
+		DrawFormatString(280, 360, 0xaaaaaa, "攻撃:ENTER");
 	}
 	//選んだ時
 	else if (isAttack) {
-
 		//合計値の算出
 		if (isAttackProbability == false && isThird == true) {
-			DrawFormatString(320, 160, 0xaaaaaa, "攻撃値:%d", attackTotal);
+			DrawFormatString(280, 360, 0xaaaaaa, "攻撃値:%d  ENTER", status.power);
 		}
-		else {
 			//選択肢
-			DrawFormatString(50, 200, 0xaaaaaa, "弱");
-			DrawFormatString(100, 200, 0xaaaaaa, "中");
-			DrawFormatString(150, 200, 0xaaaaaa, "強");
+			DrawFormatString(100, 600, GetColor(0, 0, 255), "弱");
+			DrawFormatString(200, 600, GetColor(0, 255, 0), "中");
+			DrawFormatString(300, 600, GetColor(255, 0, 0), "強");
+			//確率表示
+			DrawFormatString(0, 650, 0xaaaaaa, "確率");
+			DrawFormatString(100, 650, 0xaaaaaa, "%d%%", weakAttackProbability);
+			DrawFormatString(200, 650, 0xaaaaaa, "%d%%", mediumAttackProbability);
+			DrawFormatString(300, 650, 0xaaaaaa, "%d%%", strongAttackProbability);
+			//攻撃力表示
+			DrawFormatString(0, 700, 0xaaaaaa, "攻撃力");
+			DrawFormatString(100, 700, 0xaaaaaa, "%d", weakAttack);
+			DrawFormatString(200, 700, 0xaaaaaa, "%d", mediumAttack);
+			DrawFormatString(300, 700, 0xaaaaaa, "%d", strongAttack);
 			//操作方法
-			DrawFormatString(300, 200, 0xaaaaaa, "A,Dで選択:Spaceで決定");
+			DrawFormatString(450, 600, 0xaaaaaa, "三回攻撃方法を選択");
+			DrawFormatString(450, 650, 0xaaaaaa, "A,Dで選択:Spaceで決定");
+			//体力
+			DrawFormatString(450, 700, 0xaaaaaa, "PlayerHP:%d",status.hp);
+
+
 			//何を選んだか
 			////一番目
 			if (isFirst) {
+				DrawFormatString(100, 550, 0xaaaaaa, "1:");
 				if (first == weak) {
-					DrawFormatString(50, 100, 0xaaaaaa, "1:weak");
+					DrawFormatString(120, 550, GetColor(0, 0, 255), "弱");
 				}
 				else if (first == medium) {
-					DrawFormatString(50, 100, 0xaaaaaa, "1:medium");
+					DrawFormatString(120, 550, GetColor(0, 255, 0), "中");
 				}
 				else if (first == strong) {
-					DrawFormatString(50, 100, 0xaaaaaa, "1:strong");
+					DrawFormatString(120, 550, GetColor(255, 0, 0), "強");
 				}
 			}
 			////二番目
 			if (isSecond) {
+				DrawFormatString(200, 550, 0xaaaaaa, "2:");
 				if (second == weak) {
-					DrawFormatString(150, 100, 0xaaaaaa, "2:weak");
+					DrawFormatString(220, 550, GetColor(0, 0, 255), "弱");
 				}
 				else if (second == medium) {
-					DrawFormatString(150, 100, 0xaaaaaa, "2:medium");
+					DrawFormatString(220, 550, GetColor(0, 255, 0), "中");
 				}
 				else if (second == strong) {
-					DrawFormatString(150, 100, 0xaaaaaa, "2:strong");
+					DrawFormatString(220, 550, GetColor(255, 0, 0), "強");
 				}
 			}
 			////三番目
 			if (isThird) {
+				DrawFormatString(300, 550, 0xaaaaaa, "3:");
 				if (third == weak) {
-					DrawFormatString(250, 100, 0xaaaaaa, "3:weak");
+					DrawFormatString(320, 550, GetColor(0, 0, 255), "弱");
 				}
 				else if (third == medium) {
-					DrawFormatString(250, 100, 0xaaaaaa, "3:medium");
+					DrawFormatString(320, 550, GetColor(0, 255, 0), "中");
 				}
 				else if (third == strong) {
-					DrawFormatString(250, 100, 0xaaaaaa, "3:strong");
+					DrawFormatString(320, 550, GetColor(255, 0, 0), "強");
 				}
 			}
 
 			//今どれを選択しているか
 			if (attackSelect == weak) {
-				DrawFormatString(50, 150, 0xaaaaaa, "weakを選択");
+				DrawFormatString(50, 500, 0xaaaaaa, "弱を選択");
 			}
 			else if (attackSelect == medium) {
-				DrawFormatString(50, 150, 0xaaaaaa, "mediumを選択");
+				DrawFormatString(50, 500, 0xaaaaaa, "中を選択");
 			}
 			else if (attackSelect == strong) {
-				DrawFormatString(50, 150, 0xaaaaaa, "strongを選択");
+				DrawFormatString(50, 500, 0xaaaaaa, "強を選択");
 			}
 		}
-	}
 }
 
 void Player::Attack()
 {
+
 	//選択
 	//左
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A)) {
@@ -145,6 +170,7 @@ void Player::Attack()
 	}
 	//アタックの計算
 	if (isAttackProbability) {
+		status.power = 0;
 		//アタックの確率
 		int firstProbability = (rand() % 100)+1;
 		int secondProbability = (rand() % 100) + 1;
@@ -154,19 +180,19 @@ void Player::Attack()
 		//弱
 		if (first==weak) {
 			if (weakAttackProbability >= firstProbability) {
-				attackTotal += weakAttack;
+				status.power += weakAttack;
 			}
 		}
 		//中
 		else if (first == medium) {
 			if (mediumAttackProbability >= firstProbability) {
-				attackTotal += mediumAttack;
+				status.power += mediumAttack;
 			}
 		}
 		//強
 		else if (first == strong) {
 			if (strongAttackProbability >= firstProbability) {
-				attackTotal += strongAttack;
+				status.power += strongAttack;
 			}
 		}
 
@@ -174,19 +200,19 @@ void Player::Attack()
 		//弱
 		if (second == weak) {
 			if (weakAttackProbability >= secondProbability) {
-				attackTotal += weakAttack;
+				status.power += weakAttack;
 			}
 		}
 		//中
 		else if (second == medium) {
 			if (mediumAttackProbability >= secondProbability) {
-				attackTotal += mediumAttack;
+				status.power += mediumAttack;
 			}
 		}
 		//強
 		else if (second == strong) {
 			if (strongAttackProbability >= secondProbability) {
-				attackTotal += strongAttack;
+				status.power += strongAttack;
 			}
 		}
 
@@ -194,19 +220,19 @@ void Player::Attack()
 		//弱
 		if (third == weak) {
 			if (weakAttackProbability >= thirdProbability) {
-				attackTotal += weakAttack;
+				status.power += weakAttack;
 			}
 		}
 		//中
 		else if (third == medium) {
 			if (mediumAttackProbability >= thirdProbability) {
-				attackTotal += mediumAttack;
+				status.power += mediumAttack;
 			}
 		}
 		//強
 		else if (third == strong) {
 			if (strongAttackProbability >= thirdProbability) {
-				attackTotal += strongAttack;
+				status.power += strongAttack;
 			}
 		}
 		isAttackProbability = false;
@@ -215,13 +241,38 @@ void Player::Attack()
 	//アタックの終わり
 	if (isAttackProbability == false && isThird == true) {
 		if(Input::GetInstance()->KeyTrigger(KEY_INPUT_RETURN)) {
-			isAttack = false;
 			isFirst = false;
 			isSecond = false;
 			isThird = false;
 			isAttackProbability = false;
-			attackTotal = 0;
+			isAttack = false;
+			turnChange = true;
 		}
 	}
 
+}
+
+void Player::Collision()
+{
+	status.hp -= enemyStatus.power;
+}
+
+void Player::Reset()
+{
+	//ステータス
+	status.hp = 10;
+	status.power = 0;
+	status.speed = 1;
+	//アタック値の初期化
+	weakAttack = initialWeakAttack;
+	mediumAttack = initialMediumAttack;
+	strongAttack = initialStrongttack;
+
+	//確率値の初期化
+	weakAttackProbability = initialWeakAttackProbability;
+	mediumAttackProbability = initialMediumAttackProbability;
+	strongAttackProbability = initialStrongAttackProbability;
+
+	//死んだ判定の初期化
+	deadFlag = false;
 }
