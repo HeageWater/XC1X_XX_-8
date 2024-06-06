@@ -22,7 +22,31 @@ public://関数
 	void Draw();
 	//攻撃
 	void Attack();
+	//攻撃を食らう
+	void Collision();
+	//リセット
+	void Reset();
+	//セッター
+	//各種ステータス関係
+	void SetHitPoint(size_t hp) { status.hp = hp; };
+	void SetPower(size_t power) { status.power = power; };
+	void SetSpeed(size_t speed) { status.speed = speed; };
+	void SetIsAttack(bool isAttack) { this->isAttack = isAttack; }
+	void SetEnemyStatus(Status status) { enemyStatus = status; }
+	void SetTurnChange(bool turnChange_) { turnChange = turnChange_; }
+	//ゲッター
+	//ステータスを返す
+	Status GetStatus() { return status; }
+	//攻撃が終わったタイミング
+	bool GetIsAttack() { return isAttack; }
+	//ターンチェンジ
+	bool GetTurnChange() { return turnChange; }
+	//死んだ判定
+	bool GetDeadFlag() { return deadFlag; }
 private://変数
+	//ステータス
+	Status status;
+	Status enemyStatus;
 	//弱中強のアタック値
 	int weakAttack = 0;
 	int mediumAttack = 0;
@@ -50,8 +74,12 @@ private://変数
 	//攻撃選択フラグ
 	bool isAttack = false;
 
-	//アタック値の合計
-	int attackTotal = 0;
 	//アタックの計算フラグ
 	bool isAttackProbability = false;
+
+	//デスフラグ
+	bool deadFlag = false;
+
+	//ターンチェンジ
+	bool turnChange = false;
 };

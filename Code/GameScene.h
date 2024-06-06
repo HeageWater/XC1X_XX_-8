@@ -26,6 +26,9 @@ public:
 	//描画
 	void Draw();
 
+	//ターンチェンジ
+	void TurnChange();
+
 private:
 
 	//player生成
@@ -39,6 +42,9 @@ private:
 
 	//フェーズ
 	size_t phase;
+
+	//ターン
+	int turn = 0;
 
 	//敵更新
 	void EnemyUpdate();

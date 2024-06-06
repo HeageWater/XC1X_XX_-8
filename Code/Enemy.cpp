@@ -3,6 +3,9 @@
 
 void Enemy::Attack()
 {
+	//ターンチェンジ
+	turnChange = true;
+	isAttack = false;
 }
 
 void Enemy::Block()
@@ -28,27 +31,49 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+
+	//デスフラグ
+	if (status.hp == 0) {
+		deadFlag = true;
+	}
 	//ランダム
 	int a = rand() % 100;
 
 	//ブロックフラグリセット
 	blockFlag = false;
-
-	//75%で攻撃
-	if (a < 75)
-	{
+	//攻撃をくらって攻撃し返す(α版用の行動)
+	if (isAttack) {
 		Attack();
 	}
-	else
-	{
-		Block();
-	}
 
+	////75%で攻撃
+	//if (a < 75)
+	//{
+	//	Attack();
+	//}
+	//else
+	//{
+	//	Block();
+	//}
+	
+	
 }
 
 void Enemy::Draw()
 {
+	//体力
+	DrawFormatString(450, 100, 0xaaaaaa, "EnemyHP:%d", status.hp);
+}
 
+void Enemy::Collision()
+{
+	//オーバー火力の時(体力がマイナスに行くとき)
+	if (status.hp <= playerStatus.power) {
+		status.hp = 0;
+	}
+	else {
+		status.hp -= playerStatus.power;
+	}
 }
 
 void Enemy::SetHitPoint(size_t hp)
