@@ -14,9 +14,20 @@ void Mouse::Update()
 	MouseInput = GetMouseInput();
 }
 
-bool Mouse::isMouseDown(int MouseButton)
+bool Mouse::isMouseTrigger(int MouseButton)
 {
 	if (((MouseInput & MouseButton) != (PrevMouseInput & MouseButton)) && ((MouseInput & MouseButton) != 0)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Mouse::isMouseDown(int MouseButton)
+{
+
+	if(MouseInput == MouseButton){
 		return true;
 	}
 	else {
@@ -28,3 +39,39 @@ void Mouse::MousePrev()
 {
 	PrevMouseInput = MouseInput;
 }
+
+bool Mouse::isMouseLeftClickTo2D(Float2 mPos, M2DColData data)
+{
+
+	Float2 sizeHarf = { data.size .x / 2 , data.size.y / 2};
+
+	if (mPos.x < data.pos.x + sizeHarf.x && data.pos.x - sizeHarf.x < mPos.x) {
+		if (mPos.y < data.pos.y + sizeHarf.y && data.pos.y - sizeHarf.y < mPos.y) {
+
+			//“–‚½‚Á‚Ä‚éó‘Ô‚Å¶ƒNƒŠƒbƒN‚µ‚½
+			if (isMouseTrigger(MOUSE_INPUT_LEFT)) {
+				return true;
+			}
+
+		}
+	}
+
+	return false;
+}
+
+//bool Mouse::CollisionMouseToSprite(Float2 mPos, Sprite spite)
+//{
+//	Int2 spriteSize;
+//	GetGraphSize(spite.data, &spriteSize.x, &spriteSize.y);
+//
+//	if (mPos.x < spite.pos.x + spriteSize.x && spite.pos.x < mPos.x) {
+//		if (mPos.y < spite.pos.y + spriteSize.y && spite.pos.y < mPos.y) {
+//
+//			//“–‚½‚Á‚Ä‚é
+//			return true;
+//
+//		}
+//	}
+//
+//	return false;
+//}

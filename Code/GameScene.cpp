@@ -41,12 +41,6 @@ void GameScene::Update()
 	Input::GetInstance()->Update();
 	Mouse::GetInstance()->Update();
 
-	//テスト
-	if (Mouse::GetInstance()->isMouseDown(MOUSE_INPUT_LEFT)) {
-		DrawFormatString(0, 220, 0xaaaaaa, "左クリック");
-	}
-	DrawFormatString(0, 200, 0xaaaaaa, "マウス座標 (%f,%f)", Mouse::GetInstance()->mousePos.x, Mouse::GetInstance()->mousePos.y);
-
 	//フェーズ
 	switch (phase)
 	{
