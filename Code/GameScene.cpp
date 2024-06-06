@@ -286,6 +286,7 @@ void GameScene::PlayScene()
 
 	case ItemPhase:
 
+		DrawFormatString(0, 0, 0xaaaaaa, "Item");
 		break;
 
 	case PowerupPhase:
