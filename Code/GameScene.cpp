@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Input.h"
+#include "Mouse.h"
 #include "roll.h"
 
 enum Phase
@@ -21,25 +22,27 @@ enum Scene
 
 void GameScene::Run()
 {
-	//XV
+	//æ›´æ–°
 	Update();
+	//ãƒã‚¦ã‚¹ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
+	Mouse::GetInstance()->MousePrev();
 }
 
 void GameScene::Initialize()
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	player->Initialize();
 
-	//ƒ}ƒbƒv‰Šú‰»
+	//ãƒãƒƒãƒ—åˆæœŸåŒ–
 	map->Initialize();
 
-	//Å‰‚Íƒ}ƒbƒv‚©‚ç
+	//æœ€åˆã¯ãƒãƒƒãƒ—ã‹ã‚‰
 	phase = MapPhase;
 
-	//ƒ^ƒCƒgƒ‹
+	//ã‚¿ã‚¤ãƒˆãƒ«
 	scene = Title;
 
-	//ƒŠƒ\[ƒX“Ç‚İ‚İ
+	//ãƒªã‚½ãƒ¼ã‚¹èª­ã¿è¾¼ã¿
 	titlePng = LoadGraph("Resource//title.png");
 	gameoverPng = LoadGraph("Resource//gameover.png");
 	clearPng= LoadGraph("Resource//clear.png");
@@ -49,10 +52,11 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
-	//“ü—ÍXV
+	//å…¥åŠ›æ›´æ–°
 	Input::GetInstance()->Update();
+	Mouse::GetInstance()->Update();
 
-	//ƒtƒF[ƒY
+	//ãƒ•ã‚§ãƒ¼ã‚º
 	switch (scene)
 	{
 	case Title:
@@ -86,7 +90,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	//ƒtƒF[ƒY
+	//ãƒ•ã‚§ãƒ¼ã‚º
 	switch (scene)
 	{
 	case Title:
@@ -122,16 +126,16 @@ void GameScene::TurnChange()
 {
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		//ƒvƒŒƒCƒ„[‚Ìƒ^[ƒ“ƒ`ƒFƒ“ƒWƒtƒ‰ƒO
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¿ãƒ¼ãƒ³ãƒã‚§ãƒ³ã‚¸ãƒ•ãƒ©ã‚°
 		if (player->GetTurnChange()) {
-			//ƒvƒŒƒCƒ„[‚ÌUŒ‚ˆ—”»’è
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ”»æ’ƒå‡¦ç†åˆ¤å®š
 			enemies[i].SetIsAttack(true);
 			enemies[i].SetPlayerStatus(player->GetStatus());
 			enemies[i].Collision();
 			player->SetTurnChange(false);
 		}
 
-		//“G‚Ìƒ^[ƒ“ƒ`ƒFƒ“ƒWƒtƒ‰ƒO
+		//æ•µã®ã‚¿ãƒ¼ãƒ³ãƒã‚§ãƒ³ã‚¸ãƒ•ãƒ©ã‚°
 		if (enemies[i].GetTurnChange()) {
 			player->SetIsAttack(true);
 			player->SetEnemyStatus(enemies[i].GetStatus());
@@ -145,9 +149,9 @@ void GameScene::EnemyUpdate()
 {
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		//XV
+		//æ›´æ–°
 		enemies[i].Update();
-		////“G‚ÌUŒ‚”»’è
+		////æ•µã®æ”»æ’ƒåˆ¤å®š
 		//if (enemies[i].GetIsAttack()) {
 		//	enemies[i].SetIsAttack(false);
 		//	player->SetIsAttack(true);
@@ -155,17 +159,17 @@ void GameScene::EnemyUpdate()
 		//	player->Collision();
 		//}
 
-		////ƒvƒŒƒCƒ„[‚ÌUŒ‚ˆ—”»’è
+		////ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ”»æ’ƒå‡¦ç†åˆ¤å®š
 		//if (player->GetIsAttack()) {
 		//	player->SetIsAttack(false);
 		//	enemies[i].SetIsAttack(true);
 		//	enemies[i].SetPlayerStatus(player->GetStatus());
 		//}
 
-		////deadflag‚ªtrue‚¾‚Á‚½‚çíœ
+		////deadflagãŒtrueã ã£ãŸã‚‰å‰Šé™¤
 		//if (enemies[i].GetDeadFlag())
 		//{
-		//	//íœ
+		//	//å‰Šé™¤
 		//	enemies.erase(enemies.begin() + i);
 		//}
 
@@ -174,78 +178,78 @@ void GameScene::EnemyUpdate()
 
 void GameScene::Finalize()
 {
-	//“Gƒƒ‚ƒŠŠJ•ú
+	//æ•µãƒ¡ãƒ¢ãƒªé–‹æ”¾
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies.erase(enemies.begin() + i);
 	}
 
-	//‰æ‘œƒƒ‚ƒŠŠJ•ú
+	//ç”»åƒãƒ¡ãƒ¢ãƒªé–‹æ”¾
 	InitGraph();
 
-	//ƒTƒEƒ“ƒhƒƒ‚ƒŠŠJ•ú
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ¡ãƒ¢ãƒªé–‹æ”¾
 	InitSoundMem();
 }
 void GameScene::PlayScene()
 {
-	//ƒ}ƒX‚Ìí—ŞŠi”[—p
+	//ãƒã‚¹ã®ç¨®é¡æ ¼ç´ç”¨
 	size_t troutKind;
 
-	//ƒtƒF[ƒY
+	//ãƒ•ã‚§ãƒ¼ã‚º
 	switch (phase)
 	{
 	case MapPhase:
 
-		//ƒ}ƒbƒvXV
+		//ãƒãƒƒãƒ—æ›´æ–°
 		map->Update();
-
-		//space‚Åƒ}ƒX‚É“ü‚é
+	
+		//spaceã§ãƒã‚¹ã«å…¥ã‚‹
 		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
 		{
-			//ƒ}ƒX‚Ìí—ŞŠi”[
+			//ãƒã‚¹ã®ç¨®é¡æ ¼ç´
 			troutKind = map->GetTrout();
 
-			//ƒtƒF[ƒYˆÚ“®
+			//ãƒ•ã‚§ãƒ¼ã‚ºç§»å‹•
 			if (troutKind == BATTLE)
 			{
-				//ƒoƒgƒ‹ƒtƒF[ƒY‚ÖˆÚs
+				//ãƒãƒˆãƒ«ãƒ•ã‚§ãƒ¼ã‚ºã¸ç§»è¡Œ
 				phase = BattlePhase;
 
-				//ƒvƒŒƒCƒ„[‚Ìƒ^[ƒ“‚©‚ç
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¿ãƒ¼ãƒ³ã‹ã‚‰
 				player->SetIsAttack(true);
 
-				//“G¶¬
+				//æ•µç”Ÿæˆ
 				Enemy newEnemy;
 
-				//‰Šú‰»
+				//åˆæœŸåŒ–
 				newEnemy.Initialize();
 
-				//Ši”[
+				//æ ¼ç´
 				enemies.push_back(newEnemy);
 
 			}
 			else if (troutKind == ITEM)
 			{
-				//ƒAƒCƒeƒ€ƒtƒF[ƒY‚ÖˆÚs
+				//ã‚¢ã‚¤ãƒ†ãƒ ãƒ•ã‚§ãƒ¼ã‚ºã¸ç§»è¡Œ
 				phase = ItemPhase;
 			}
 			else if (troutKind == POWERUP)
 			{
-				//ƒpƒ[ƒAƒbƒvƒtƒF[ƒY‚ÖˆÚs
+				//ãƒ‘ãƒ¯ãƒ¼ã‚¢ãƒƒãƒ—ãƒ•ã‚§ãƒ¼ã‚ºã¸ç§»è¡Œ
 				phase = PowerupPhase;
 
-				//“G¶¬
+				//æ•µç”Ÿæˆ
 				PowerupTrout newPower;
 
-				//‰Šú‰»
+				//åˆæœŸåŒ–
 				newPower.Initialize();
 
-				//Ši”[
+				//æ ¼ç´
 				powerups.push_back(newPower);
 
 			}
 
-			//ˆêŒÂ‰œ‚Ö
+			//ä¸€å€‹å¥¥ã¸
 			map->TroutPlus();
 		}
 
@@ -253,36 +257,36 @@ void GameScene::PlayScene()
 
 	case BattlePhase:
 
-		//ƒvƒŒƒCƒ„[XV
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ›´æ–°
 		player->Update();
 
-		//“GXV
+		//æ•µæ›´æ–°
 		EnemyUpdate();
 
-		//ƒ^[ƒ“ƒ`ƒFƒ“ƒW
+		//ã‚¿ãƒ¼ãƒ³ãƒã‚§ãƒ³ã‚¸
 		TurnChange();
 
-		//“G‚ğ“|‚µ‚½
+		//æ•µã‚’å€’ã—ãŸæ™‚
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
 			if (enemies[i].GetDeadFlag()) {
-				//íœ
+				//å‰Šé™¤
 				enemies.erase(enemies.begin() + i);
-				//–{—ˆ‚Í•ñV‚¾‚¯‚Çƒ¿”Å‚Í‚»‚Ì‚Ü‚Ü–ß‚é
+				//æœ¬æ¥ã¯å ±é…¬ã ã‘ã©Î±ç‰ˆã¯ãã®ã¾ã¾æˆ»ã‚‹
 				phase = MapPhase;
 			}
 		}
-		//•‰‚¯‚½‚Æ‚«
+		//è² ã‘ãŸã¨ã
 		if (player->GetDeadFlag()) {
-			//‚±‚±‚ÅƒQ[ƒ€ƒI[ƒo[
+			//ã“ã“ã§ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
 			scene = Over;
-			//ƒ¿”Å—p
+			//Î±ç‰ˆç”¨
 			player->Reset();
 			phase = MapPhase;
-			//“G‚Ìíœ
+			//æ•µã®å‰Šé™¤
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
-				//íœ
+				//å‰Šé™¤
 				enemies.erase(enemies.begin() + i);
 			}
 		}
@@ -299,20 +303,20 @@ void GameScene::PlayScene()
 
 		for (size_t i = 0; i < powerups.size(); i++)
 		{
-			//XV
+			//æ›´æ–°
 			powerups[i].Update();
 
-			//ƒL[‚É‰‚¶‚ÄƒXƒe[ƒ^ƒXƒAƒbƒv
+			//ã‚­ãƒ¼ã«å¿œã˜ã¦ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚¢ãƒƒãƒ—
 			if (Input::GetInstance()->KeyTrigger(KEY_INPUT_Z) || Input::GetInstance()->KeyTrigger(KEY_INPUT_X) || Input::GetInstance()->KeyTrigger(KEY_INPUT_C))
 			{
-				//ƒvƒŒƒCƒ„[‹­‰»
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å¼·åŒ–
 				player->PlusStatus(powerups[i].GetStatus());
 
-				//ƒ}ƒbƒvƒtƒF[ƒY‚Ö
+				//ãƒãƒƒãƒ—ãƒ•ã‚§ãƒ¼ã‚ºã¸
 				phase = MapPhase;
 			}
 
-			//Á‹
+			//æ¶ˆå»
 			if (powerups[i].GetDeleteFlag())
 			{
 				powerups.erase(powerups.begin() + i);
@@ -326,8 +330,8 @@ void GameScene::PlayScene()
 		break;
 	}
 
-	//Œã‚ÅÁ‚·
-	//O,P‚ÅƒtƒF[ƒYØ‚è‘Ö‚¦
+	//å¾Œã§æ¶ˆã™
+	//O,Pã§ãƒ•ã‚§ãƒ¼ã‚ºåˆ‡ã‚Šæ›¿ãˆ
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
 	{
 		phase = MapPhase;
@@ -340,7 +344,7 @@ void GameScene::PlayScene()
 
 void GameScene::TitleScene()
 {
-	//play‚Ö
+	//playã¸
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
 	{
 		scene = Play;
@@ -349,7 +353,7 @@ void GameScene::TitleScene()
 
 void GameScene::GameoverScene()
 {
-	//play‚Ö
+	//playã¸
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
 	{
 		scene = Title;
@@ -358,7 +362,7 @@ void GameScene::GameoverScene()
 
 void GameScene::ClearScene()
 {
-	//play‚Ö
+	//playã¸
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
 	{
 		scene = Title;
@@ -367,43 +371,43 @@ void GameScene::ClearScene()
 
 void GameScene::PlayDraw()
 {
-	//ƒtƒF[ƒY
+	//ãƒ•ã‚§ãƒ¼ã‚º
 	switch (phase)
 	{
 	case MapPhase:
 
-		////”wŒi
+		////èƒŒæ™¯
 		//DrawGraph(0, 0, mapBackGroundPng, 0);
-		//ƒ}ƒbƒv•`‰æ
+		//ãƒãƒƒãƒ—æç”»
 		map->Draw();
 
-		//playerƒXƒe[ƒ^ƒX•\¦
-		DrawFormatString(480, 510, 0xaaaaaa, "ƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒX");
-		DrawFormatString(480, 540, 0xaaaaaa, "ƒvƒŒƒCƒ„[ HP :%d", player->GetStatus().hp);
-		DrawFormatString(480, 570, 0xaaaaaa, "ƒvƒŒƒCƒ„[ POWER :%d", player->GetStatus().power);
-		DrawFormatString(480, 600, 0xaaaaaa, "ƒvƒŒƒCƒ„[ SPEED :%d", player->GetStatus().speed);
+		//playerã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡¨ç¤º
+		DrawFormatString(480, 510, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹");
+		DrawFormatString(480, 540, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ HP :%d", player->GetStatus().hp);
+		DrawFormatString(480, 570, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ POWER :%d", player->GetStatus().power);
+		DrawFormatString(480, 600, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ SPEED :%d", player->GetStatus().speed);
 
 		break;
 
 	case BattlePhase:
 
-		////”wŒi
+		////èƒŒæ™¯
 		//DrawGraph(0, 0, playBackGroundPng, 0);
 
-		//ƒvƒŒƒCƒ„[•`‰æ
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æç”»
 		player->Draw();
 
-		//“G•`‰æ
+		//æ•µæç”»
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
 			enemies[i].Draw();
 		}
 
-		//playerƒXƒe[ƒ^ƒX•\¦
-		DrawFormatString(480, 510, 0xaaaaaa, "ƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒX");
-		DrawFormatString(480, 540, 0xaaaaaa, "ƒvƒŒƒCƒ„[ HP :%d", player->GetStatus().hp);
-		DrawFormatString(480, 570, 0xaaaaaa, "ƒvƒŒƒCƒ„[ POWER :%d", player->GetStatus().power);
-		DrawFormatString(480, 600, 0xaaaaaa, "ƒvƒŒƒCƒ„[ SPEED :%d", player->GetStatus().speed);
+		//playerã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡¨ç¤º
+		DrawFormatString(480, 510, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹");
+		DrawFormatString(480, 540, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ HP :%d", player->GetStatus().hp);
+		DrawFormatString(480, 570, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ POWER :%d", player->GetStatus().power);
+		DrawFormatString(480, 600, 0xaaaaaa, "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ SPEED :%d", player->GetStatus().speed);
 
 		break;
 
@@ -417,7 +421,7 @@ void GameScene::PlayDraw()
 
 		for (size_t i = 0; i < powerups.size(); i++)
 		{
-			//XV
+			//æ›´æ–°
 			powerups[i].Draw();
 		}
 
@@ -431,18 +435,18 @@ void GameScene::PlayDraw()
 
 void GameScene::TitleDraw()
 {
-	//ƒ^ƒCƒgƒ‹
+	//ã‚¿ã‚¤ãƒˆãƒ«
 	DrawGraph(0, 0, titlePng, 0);
 }
 
 void GameScene::GameoverDraw()
 {
-	//ƒQ[ƒ€ƒI[ƒo[
+	//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
 	DrawGraph(0, 0, gameoverPng, 0);
 }
 
 void GameScene::ClearDraw()
 {
-	//ƒNƒŠƒA
+	//ã‚¯ãƒªã‚¢
 	DrawGraph(0, 0, clearPng, 0);
 }
