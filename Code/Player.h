@@ -84,4 +84,9 @@ private://変数
 
 	//ターンチェンジ
 	bool turnChange = false;
+
+	//リソース
+	size_t weakPng;
+	size_t mediumPng;
+	size_t strongPng;
 };

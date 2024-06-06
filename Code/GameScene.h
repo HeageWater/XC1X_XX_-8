@@ -74,5 +74,8 @@ private:
 
 	//âºÉäÉ\Å[ÉX
 	size_t titlePng;
-
+	size_t gameoverPng;
+	size_t clearPng;
+	size_t mapBackGroundPng;
+	size_t playBackGroundPng;
 };
