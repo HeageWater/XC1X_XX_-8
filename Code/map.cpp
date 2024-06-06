@@ -46,21 +46,21 @@ void Map::Update()
 
 	//‘I‘ð
 	//ã
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
-	{
-		if (nowPoint[0] > 0)
-		{
-			nowPoint[0]--;
-		}
-	}
-	//‰º
-	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
-	{
-		if (nowPoint[0] < height_ - 1)
-		{
-			nowPoint[0]++;
-		}
-	}
+	//if (Input::GetInstance()->KeyTrigger(KEY_INPUT_W))
+	//{
+	//	if (nowPoint[0] > 0)
+	//	{
+	//		nowPoint[0]--;
+	//	}
+	//}
+	////‰º
+	//else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_S))
+	//{
+	//	if (nowPoint[0] < height_ - 1)
+	//	{
+	//		nowPoint[0]++;
+	//	}
+	//}
 
 	//¶
 	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_A))
@@ -175,14 +175,6 @@ void Map::Draw()
 						pointY + size,
 						powerPng, false);
 				}
-
-				//ŽlŠp•`‰æ
-				DrawBox(
-					pointX,
-					pointY,
-					pointX + size,
-					pointY + size,
-					color, false);
 			}
 		}
 	}

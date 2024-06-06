@@ -38,6 +38,8 @@ public:
 	//入った場所のマスの種類を返す
 	size_t GetTrout();
 
+	//
+	void TroutPlus() { nowPoint[0]++; };
 private:
 
 	//マップ生成

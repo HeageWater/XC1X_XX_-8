@@ -244,6 +244,9 @@ void GameScene::PlayScene()
 				powerups.push_back(newPower);
 
 			}
+
+			//ˆêŒÂ‰œ‚Ö
+			map->TroutPlus();
 		}
 
 		break;
