@@ -286,7 +286,7 @@ void GameScene::PlayScene()
 
 	case ItemPhase:
 
-		DrawFormatString(0, 0, 0xaaaaaa, "Item");
+
 		break;
 
 	case PowerupPhase:
@@ -312,6 +312,8 @@ void GameScene::PlayScene()
 				powerups.erase(powerups.begin() + i);
 			}
 		}
+
+		break;
 
 	default:
 
@@ -384,6 +386,22 @@ void GameScene::PlayDraw()
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
 			enemies[i].Draw();
+		}
+
+		break;
+
+	case ItemPhase:
+
+		DrawFormatString(0, 0, 0xaaaaaa, "Item");
+
+		break;
+
+	case PowerupPhase:
+
+		for (size_t i = 0; i < powerups.size(); i++)
+		{
+			//XV
+			powerups[i].Draw();
 		}
 
 		break;

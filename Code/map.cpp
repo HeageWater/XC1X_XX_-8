@@ -165,7 +165,7 @@ void Map::Draw()
 size_t Map::GetTrout()
 {
 	//Œ»İ‚ÌêŠ‚ğ•Ô‚·
-	return load_[nowPoint[0]][nowPoint[1]];
+	return load_[nowPoint[1]][nowPoint[0]];
 }
 
 void Map::MapCreate()
