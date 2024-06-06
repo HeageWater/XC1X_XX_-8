@@ -332,14 +332,14 @@ void GameScene::PlayScene()
 
 	//後で消す
 	//O,Pでフェーズ切り替え
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
+	/*if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
 	{
 		phase = MapPhase;
 	}
 	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_P))
 	{
 		phase = BattlePhase;
-	}
+	}*/
 }
 
 void GameScene::TitleScene()
