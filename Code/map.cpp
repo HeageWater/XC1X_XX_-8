@@ -23,6 +23,11 @@ void Map::Initialize()
 	//仮動きよう
 	now = 0;
 	nowF = false;
+
+	//リソース読み込み
+	battlePng = LoadGraph("Resource//battle.png");
+	itemPng = LoadGraph("Resource//heal.png");
+	powerPng = LoadGraph("Resource//enhance.png");
 }
 
 void Map::Update()
@@ -137,17 +142,38 @@ void Map::Draw()
 				if (load_[i][j] == BATTLE)
 				{
 					color = 0xbb0000;
-					DrawFormatString(pointX, pointY + spriteSize, color, "BATTLE");
+					//DrawFormatString(pointX, pointY + spriteSize, color, "BATTLE");
+
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						battlePng, false);
 				}
 				else if (load_[i][j] == ITEM)
 				{
 					color = 0x00bb00;
-					DrawFormatString(pointX, pointY + spriteSize, color, "ITEM");
+					//DrawFormatString(pointX, pointY + spriteSize, color, "ITEM");
+
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						itemPng, false);
 				}
 				else if (load_[i][j] == POWERUP)
 				{
 					color = 0xbbbb00;
-					DrawFormatString(pointX, pointY + spriteSize, color, "POWERUP");
+					//DrawFormatString(pointX, pointY + spriteSize, color, "POWERUP");
+
+					DrawExtendGraph(
+						pointX,
+						pointY,
+						pointX + size,
+						pointY + size,
+						powerPng, false);
 				}
 
 				//四角描画

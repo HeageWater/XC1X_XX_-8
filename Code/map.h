@@ -62,5 +62,8 @@ private:
 	size_t now = 0;
 	bool nowF = false;
 
-
+	//ÉäÉ\Å[ÉX
+	size_t battlePng;
+	size_t itemPng;
+	size_t powerPng;
 };
