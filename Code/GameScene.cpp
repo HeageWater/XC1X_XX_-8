@@ -41,7 +41,10 @@ void GameScene::Initialize()
 
 	//リソース読み込み
 	titlePng = LoadGraph("Resource//title.png");
-
+	gameoverPng = LoadGraph("Resource//gameover.png");
+	clearPng= LoadGraph("Resource//clear.png");
+	mapBackGroundPng= LoadGraph("Resource//mapBackGround.png");
+	playBackGroundPng = LoadGraph("Resource//gameBackGround.png");
 }
 
 void GameScene::Update()
@@ -330,12 +333,6 @@ void GameScene::PlayScene()
 	{
 		phase = BattlePhase;
 	}
-
-	//playerステータス表示
-	DrawFormatString(480, 510, 0xaaaaaa, "プレイヤーステータス");
-	DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
-	DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
-	DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 }
 
 void GameScene::TitleScene()
@@ -372,12 +369,23 @@ void GameScene::PlayDraw()
 	{
 	case MapPhase:
 
+		////背景
+		//DrawGraph(0, 0, mapBackGroundPng, 0);
 		//マップ描画
 		map->Draw();
+
+		//playerステータス表示
+		DrawFormatString(480, 510, 0xaaaaaa, "プレイヤーステータス");
+		DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
+		DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
+		DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 
 		break;
 
 	case BattlePhase:
+
+		////背景
+		//DrawGraph(0, 0, playBackGroundPng, 0);
 
 		//プレイヤー描画
 		player->Draw();
@@ -387,6 +395,12 @@ void GameScene::PlayDraw()
 		{
 			enemies[i].Draw();
 		}
+
+		//playerステータス表示
+		DrawFormatString(480, 510, 0xaaaaaa, "プレイヤーステータス");
+		DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
+		DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
+		DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 
 		break;
 
@@ -420,8 +434,12 @@ void GameScene::TitleDraw()
 
 void GameScene::GameoverDraw()
 {
+	//ゲームオーバー
+	DrawGraph(0, 0, gameoverPng, 0);
 }
 
 void GameScene::ClearDraw()
 {
+	//クリア
+	DrawGraph(0, 0, clearPng, 0);
 }

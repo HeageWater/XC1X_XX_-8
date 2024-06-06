@@ -61,4 +61,6 @@ private:
 	//‰¼“®‚«‚æ‚¤
 	size_t now = 0;
 	bool nowF = false;
+
+
 };

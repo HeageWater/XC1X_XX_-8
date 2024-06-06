@@ -16,6 +16,12 @@ void Player::Initialize()
 	status.hp = 10;
 	status.power = 1;
 	status.speed = 1;
+
+	//リソース
+	weakPng = LoadGraph("Resource//weak.png");
+	mediumPng = LoadGraph("Resource//mid.png");
+	strongPng = LoadGraph("Resource//strong.png");
+
 }
 
 void Player::Update()
@@ -46,10 +52,12 @@ void Player::Draw()
 		if (isAttackProbability == false && isThird == true) {
 			DrawFormatString(280, 360, 0xaaaaaa, "攻撃値:%d  ENTER", status.power);
 		}
+		//リソース
 		//選択肢
-		DrawFormatString(100, 600, GetColor(0, 0, 255), "弱");
-		DrawFormatString(200, 600, GetColor(0, 255, 0), "中");
-		DrawFormatString(300, 600, GetColor(255, 0, 0), "強");
+		DrawGraph(100, 550, weakPng, 0);
+		DrawGraph(200, 550, mediumPng, 0);
+		DrawGraph(300, 550, strongPng, 0);
+		
 		//確率表示
 		DrawFormatString(0, 650, 0xaaaaaa, "確率");
 		DrawFormatString(100, 650, 0xaaaaaa, "%d%%", weakAttackProbability);
@@ -61,8 +69,8 @@ void Player::Draw()
 		DrawFormatString(200, 700, 0xaaaaaa, "%d", mediumAttack);
 		DrawFormatString(300, 700, 0xaaaaaa, "%d", strongAttack);
 		//操作方法
-		DrawFormatString(450, 600, 0xaaaaaa, "三回攻撃方法を選択");
-		DrawFormatString(450, 650, 0xaaaaaa, "A,Dで選択:Spaceで決定");
+		DrawFormatString(450, 400, 0xaaaaaa, "三回攻撃方法を選択");
+		DrawFormatString(450, 450, 0xaaaaaa, "A,Dで選択:Spaceで決定");
 		//体力
 		DrawFormatString(450, 700, 0xaaaaaa, "PlayerHP:%d", status.hp);
 
@@ -70,53 +78,73 @@ void Player::Draw()
 		//何を選んだか
 		////一番目
 		if (isFirst) {
-			DrawFormatString(100, 550, 0xaaaaaa, "1:");
+			DrawFormatString(100, 400, 0xaaaaaa, "1:");
 			if (first == weak) {
-				DrawFormatString(120, 550, GetColor(0, 0, 255), "弱");
+				DrawGraph(120, 400, weakPng, 0);
 			}
 			else if (first == medium) {
-				DrawFormatString(120, 550, GetColor(0, 255, 0), "中");
+				DrawGraph(120, 400, mediumPng, 0);
 			}
 			else if (first == strong) {
-				DrawFormatString(120, 550, GetColor(255, 0, 0), "強");
+				DrawGraph(120, 400, strongPng, 0);
+				
 			}
 		}
 		////二番目
 		if (isSecond) {
-			DrawFormatString(200, 550, 0xaaaaaa, "2:");
+			DrawFormatString(200, 400, 0xaaaaaa, "2:");
 			if (second == weak) {
-				DrawFormatString(220, 550, GetColor(0, 0, 255), "弱");
+				DrawGraph(220, 400, weakPng, 0);
 			}
 			else if (second == medium) {
-				DrawFormatString(220, 550, GetColor(0, 255, 0), "中");
+				DrawGraph(220, 400, mediumPng, 0);
 			}
 			else if (second == strong) {
-				DrawFormatString(220, 550, GetColor(255, 0, 0), "強");
+				DrawGraph(220, 400, strongPng, 0);
 			}
 		}
 		////三番目
 		if (isThird) {
-			DrawFormatString(300, 550, 0xaaaaaa, "3:");
+			DrawFormatString(300, 400, 0xaaaaaa, "3:");
 			if (third == weak) {
-				DrawFormatString(320, 550, GetColor(0, 0, 255), "弱");
+				DrawGraph(320, 400, weakPng, 0);
 			}
 			else if (third == medium) {
-				DrawFormatString(320, 550, GetColor(0, 255, 0), "中");
+				DrawGraph(320, 400, mediumPng, 0);
 			}
 			else if (third == strong) {
-				DrawFormatString(320, 550, GetColor(255, 0, 0), "強");
+				DrawGraph(320, 400, strongPng, 0);
 			}
 		}
 
 		//今どれを選択しているか
 		if (attackSelect == weak) {
 			DrawFormatString(50, 500, 0xaaaaaa, "弱を選択");
+			//確率表示
+			DrawFormatString(140, 500, 0xaaaaaa, "確率:");
+			DrawFormatString(180, 500, 0xaaaaaa, "%d%%", weakAttackProbability);
+			//攻撃力表示
+			DrawFormatString(220, 500, 0xaaaaaa, "攻撃力:");
+			DrawFormatString(280, 500, 0xaaaaaa, "%d", weakAttack);
 		}
 		else if (attackSelect == medium) {
 			DrawFormatString(50, 500, 0xaaaaaa, "中を選択");
+			//確率表示
+			DrawFormatString(140, 500, 0xaaaaaa, "確率:");
+			DrawFormatString(180, 500, 0xaaaaaa, "%d%%", mediumAttackProbability);
+			//攻撃力表示
+			DrawFormatString(220, 500, 0xaaaaaa, "攻撃力:");
+			DrawFormatString(280, 500, 0xaaaaaa, "%d", mediumAttack);
 		}
 		else if (attackSelect == strong) {
 			DrawFormatString(50, 500, 0xaaaaaa, "強を選択");
+			//確率表示
+			DrawFormatString(140, 500, 0xaaaaaa, "確率:");
+			DrawFormatString(180, 500, 0xaaaaaa, "%d%%", strongAttackProbability);
+			//攻撃力表示
+			DrawFormatString(220, 500, 0xaaaaaa, "攻撃力:");
+			DrawFormatString(280, 500, 0xaaaaaa, "%d", strongAttack);
+			
 		}
 	}
 }
