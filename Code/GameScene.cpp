@@ -10,6 +10,15 @@ enum Phase
 	PowerupPhase,
 };
 
+enum Scene
+{
+	Title,
+	Play,
+	Clear,
+	Over,
+};
+
+
 void GameScene::Run()
 {
 	//更新
@@ -18,7 +27,6 @@ void GameScene::Run()
 
 void GameScene::Initialize()
 {
-
 	//初期化
 	player->Initialize();
 
@@ -27,201 +35,84 @@ void GameScene::Initialize()
 
 	//最初はマップから
 	phase = MapPhase;
+
+	//タイトル
+	scene = Title;
+
+	//リソース読み込み
+	titlePng = LoadGraph("Resource//title.png");
+
 }
 
 void GameScene::Update()
 {
-	//マスの種類格納用
-	size_t troutKind;
-
 	//入力更新
 	Input::GetInstance()->Update();
 
 	//フェーズ
-	switch (phase)
+	switch (scene)
 	{
-	case MapPhase:
+	case Title:
 
-		//マップ更新
-		map->Update();
-
-		//spaceでマスに入る
-		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
-		{
-			//マスの種類格納
-			troutKind = map->GetTrout();
-
-			//フェーズ移動
-			if (troutKind == BATTLE)
-			{
-				//バトルフェーズへ移行
-				phase = BattlePhase;
-
-				//プレイヤーのターンから
-				player->SetIsAttack(true);
-
-				//敵生成
-				Enemy newEnemy;
-
-				//初期化
-				newEnemy.Initialize();
-
-				//格納
-				enemies.push_back(newEnemy);
-			}
-			else if (troutKind == ITEM)
-			{
-				phase = ItemPhase;
-			}
-			else if (troutKind == POWERUP)
-			{
-				phase = PowerupPhase;
-
-				//敵生成
-				PowerupTrout newPower;
-
-				//初期化
-				newPower.Initialize();
-
-				//格納
-				powerups.push_back(newPower);
-			}
-		}
+		TitleScene();
 
 		break;
 
-	case BattlePhase:
+	case Play:
 
-		//プレイヤー更新
-		player->Update();
-
-		//敵更新
-		EnemyUpdate();
-
-		//ターンチェンジ
-		TurnChange();
-
-		//敵を倒した時
-		for (size_t i = 0; i < enemies.size(); i++)
-		{
-			if (enemies[i].GetDeadFlag()) {
-				//削除
-				enemies.erase(enemies.begin() + i);
-				//本来は報酬だけどα版はそのまま戻る
-				phase = MapPhase;
-			}
-		}
-		//負けたとき
-		if (player->GetDeadFlag()) {
-			//ここでゲームオーバー
-			//α版用
-			player->Reset();
-			phase = MapPhase;
-			//敵の削除
-			for (size_t i = 0; i < enemies.size(); i++)
-			{
-				//削除
-				enemies.erase(enemies.begin() + i);
-			}
-		}
+		PlayScene();
 
 		break;
 
-	case ItemPhase:
+	case Clear:
+
+		ClearScene();
 
 		break;
 
-	case PowerupPhase:
+	case Over:
 
-		for (size_t i = 0; i < powerups.size(); i++)
-		{
-			//更新
-			powerups[i].Update();
-
-			//キーに応じてステータスアップ
-			if (Input::GetInstance()->KeyTrigger(KEY_INPUT_Z) || Input::GetInstance()->KeyTrigger(KEY_INPUT_X) || Input::GetInstance()->KeyTrigger(KEY_INPUT_C))
-			{
-				//プレイヤー強化
-				player->PlusStatus(powerups[i].GetStatus());
-
-				//マップフェーズへ
-				phase = MapPhase;
-			}
-
-			//消去
-			if (powerups[i].GetDeleteFlag())
-			{
-				powerups.erase(powerups.begin() + i);
-			}
-		}
+		GameoverScene();
 
 		break;
 
 	default:
-
 		break;
-	}
-
-	//O,Pでフェーズ切り替え
-	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
-	{
-		phase = MapPhase;
-	}
-	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_P))
-	{
-		phase = BattlePhase;
 	}
 }
 
 void GameScene::Draw()
 {
 	//フェーズ
-	switch (phase)
+	switch (scene)
 	{
-	case MapPhase:
+	case Title:
 
-		//マップ描画
-		map->Draw();
-
-		break;
-
-	case BattlePhase:
-
-		//プレイヤー描画
-		player->Draw();
-
-		//敵描画
-		for (size_t i = 0; i < enemies.size(); i++)
-		{
-			enemies[i].Draw();
-		}
+		TitleDraw();
 
 		break;
 
-	case ItemPhase:
+	case Play:
+
+		PlayDraw();
 
 		break;
 
-	case PowerupPhase:
+	case Clear:
 
-		//敵描画
-		for (size_t i = 0; i < powerups.size(); i++)
-		{
-			powerups[i].Draw();
-		}
+		ClearDraw();
+
+		break;
+
+	case Over:
+
+		GameoverDraw();
 
 		break;
 
 	default:
-
 		break;
 	}
-
-	//playerステータス表示
-	DrawFormatString(80, 570, 0xaaaaaa, "プレイヤーステータス");
-	DrawFormatString(80, 600, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
-	DrawFormatString(80, 630, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
-	DrawFormatString(80, 660, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
 }
 
 void GameScene::TurnChange()
@@ -276,4 +167,231 @@ void GameScene::EnemyUpdate()
 		//}
 
 	}
+}
+
+void GameScene::Finalize()
+{
+	//敵メモリ開放
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies.erase(enemies.begin() + i);
+	}
+
+	//画像メモリ開放
+	InitGraph();
+
+	//サウンドメモリ開放
+	InitSoundMem();
+}
+void GameScene::PlayScene()
+{
+	//マスの種類格納用
+	size_t troutKind;
+
+	//フェーズ
+	switch (phase)
+	{
+	case MapPhase:
+
+		//マップ更新
+		map->Update();
+
+		//spaceでマスに入る
+		if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+		{
+			//マスの種類格納
+			troutKind = map->GetTrout();
+
+			//フェーズ移動
+			if (troutKind == BATTLE)
+			{
+				//バトルフェーズへ移行
+				phase = BattlePhase;
+
+				//プレイヤーのターンから
+				player->SetIsAttack(true);
+
+				//敵生成
+				Enemy newEnemy;
+
+				//初期化
+				newEnemy.Initialize();
+
+				//格納
+				enemies.push_back(newEnemy);
+
+			}
+			else if (troutKind == ITEM)
+			{
+				//アイテムフェーズへ移行
+				phase = ItemPhase;
+			}
+			else if (troutKind == POWERUP)
+			{
+				//パワーアップフェーズへ移行
+				phase = PowerupPhase;
+
+				//敵生成
+				PowerupTrout newPower;
+
+				//初期化
+				newPower.Initialize();
+
+				//格納
+				powerups.push_back(newPower);
+
+			}
+		}
+
+		break;
+
+	case BattlePhase:
+
+		//プレイヤー更新
+		player->Update();
+
+		//敵更新
+		EnemyUpdate();
+
+		//ターンチェンジ
+		TurnChange();
+
+		//敵を倒した時
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			if (enemies[i].GetDeadFlag()) {
+				//削除
+				enemies.erase(enemies.begin() + i);
+				//本来は報酬だけどα版はそのまま戻る
+				phase = MapPhase;
+			}
+		}
+		//負けたとき
+		if (player->GetDeadFlag()) {
+			//ここでゲームオーバー
+			//α版用
+			player->Reset();
+			phase = MapPhase;
+			//敵の削除
+			for (size_t i = 0; i < enemies.size(); i++)
+			{
+				//削除
+				enemies.erase(enemies.begin() + i);
+			}
+		}
+
+
+		break;
+
+	case ItemPhase:
+
+		break;
+
+	case PowerupPhase:
+
+		for (size_t i = 0; i < powerups.size(); i++)
+		{
+			//更新
+			powerups[i].Update();
+
+			//キーに応じてステータスアップ
+			if (Input::GetInstance()->KeyTrigger(KEY_INPUT_Z) || Input::GetInstance()->KeyTrigger(KEY_INPUT_X) || Input::GetInstance()->KeyTrigger(KEY_INPUT_C))
+			{
+				//プレイヤー強化
+				player->PlusStatus(powerups[i].GetStatus());
+
+				//マップフェーズへ
+				phase = MapPhase;
+			}
+
+			//消去
+			if (powerups[i].GetDeleteFlag())
+			{
+				powerups.erase(powerups.begin() + i);
+			}
+		}
+
+	default:
+
+		break;
+	}
+
+	//後で消す
+	//O,Pでフェーズ切り替え
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_O))
+	{
+		phase = MapPhase;
+	}
+	else if (Input::GetInstance()->KeyTrigger(KEY_INPUT_P))
+	{
+		phase = BattlePhase;
+	}
+
+	//playerステータス表示
+	DrawFormatString(480, 510, 0xaaaaaa, "プレイヤーステータス");
+	DrawFormatString(480, 540, 0xaaaaaa, "プレイヤー HP :%d", player->GetStatus().hp);
+	DrawFormatString(480, 570, 0xaaaaaa, "プレイヤー POWER :%d", player->GetStatus().power);
+	DrawFormatString(480, 600, 0xaaaaaa, "プレイヤー SPEED :%d", player->GetStatus().speed);
+}
+
+void GameScene::TitleScene()
+{
+	//playへ
+	if (Input::GetInstance()->KeyTrigger(KEY_INPUT_SPACE))
+	{
+		scene = Play;
+	}
+}
+
+void GameScene::GameoverScene()
+{
+}
+
+void GameScene::ClearScene()
+{
+}
+
+void GameScene::PlayDraw()
+{
+	//フェーズ
+	switch (phase)
+	{
+	case MapPhase:
+
+		//マップ描画
+		map->Draw();
+
+		break;
+
+	case BattlePhase:
+
+		//プレイヤー描画
+		player->Draw();
+
+		//敵描画
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			enemies[i].Draw();
+		}
+
+		break;
+
+	default:
+
+		break;
+	}
+}
+
+void GameScene::TitleDraw()
+{
+	//タイトル
+	DrawGraph(0, 0, titlePng, 0);
+}
+
+void GameScene::GameoverDraw()
+{
+}
+
+void GameScene::ClearDraw()
+{
 }
